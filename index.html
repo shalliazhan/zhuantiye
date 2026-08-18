@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新善中国·久久公益节</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: #fef5f3;
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "微软雅黑", sans-serif;
+}
+.page-container {
+  display: none; flex-direction: column; align-items: center; padding: 20px;
+}
+.page-container.active { display: flex; }
+.page {
+  width: 375px; background: #ffffff; border-radius: 16px; overflow: hidden;
+  box-shadow: 0 4px 30px rgba(220,40,30,0.10); position: relative;
+}
+
+/* ===== 通用 ===== */
+.float-layer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; overflow: hidden; }
+.float-item { position: absolute; opacity: 0.10; animation: floatY linear infinite; }
+.float-item:nth-child(1) { left: 5%; top: 5%; animation-duration: 14s; animation-delay: 0s; }
+.float-item:nth-child(2) { left: 80%; top: 12%; animation-duration: 12s; animation-delay: 3s; }
+.float-item:nth-child(3) { left: 15%; top: 60%; animation-duration: 16s; animation-delay: 5s; }
+.float-item:nth-child(4) { left: 85%; top: 50%; animation-duration: 13s; animation-delay: 2s; }
+.float-item:nth-child(5) { left: 50%; top: 80%; animation-duration: 18s; animation-delay: 4s; }
+@keyframes floatY {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0.10; }
+  50% { opacity: 0.16; }
+  100% { transform: translateY(800px) rotate(360deg); opacity: 0.04; }
+}
+.section { padding: 24px 18px; position: relative; z-index: 1; }
+.section-pad { padding: 18px; }
+.section-label {
+  font-size: 13px; color: #c40d23; font-weight: 700; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 8px;
+}
+.divider { height: 8px; background: #fffaf8; position: relative; z-index: 1; }
+
+.header {
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f3 50%, #ffe8e5 100%);
+  padding: 20px 18px 16px; display: flex; align-items: center; gap: 12px; z-index: 1; position: relative;
+}
+.back-btn {
+  width: 32px; height: 32px; border-radius: 50%; background: #fff;
+  border: 1px solid #fbd5cf; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: #c40d23; font-size: 18px; flex-shrink: 0;
+}
+.back-btn:hover { background: #fff0ed; }
+.header-title { font-size: 16px; font-weight: 700; color: #c40d23; }
+
+/* 通用按钮 */
+.action-btn, .topic-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  width: 100%; padding: 12px; margin-top: 14px;
+  border-radius: 24px; border: none; color: #fff; font-size: 14px; font-weight: 700;
+  background: linear-gradient(135deg, #c40d23, #e6303a);
+  text-align: center; cursor: pointer; letter-spacing: 1px;
+  box-shadow: 0 3px 12px rgba(196,13,35,0.2);
+}
+
+/* ===== 弹窗 ===== */
+.modal-overlay {
+  display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5); z-index: 9999;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal-popup {
+  background: #fff; border-radius: 16px; padding: 28px 24px 20px;
+  width: 280px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  animation: modalIn 0.25s ease;
+}
+@keyframes modalIn { from { opacity:0; transform:scale(0.9); } to { opacity:1; transform:scale(1); } }
+.modal-popup .modal-icon {
+  width: 56px; height: 56px; margin: 0 auto 16px;
+  border-radius: 50%; background: linear-gradient(135deg,#fff0ed,#fde5df);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal-popup .modal-title { font-size: 16px; font-weight: 700; color: #2c1810; margin-bottom: 8px; }
+.modal-popup .modal-text { font-size: 13px; color: #8c6e5e; line-height: 1.6; margin-bottom: 6px; }
+.modal-popup .modal-project { font-size: 15px; font-weight: 700; color: #c40d23; margin-bottom: 20px; }
+.modal-popup .modal-btn {
+  display: block; width: 100%; padding: 11px; border-radius: 22px; border: none;
+  font-size: 14px; font-weight: 600; cursor: pointer; letter-spacing: 1px;
+}
+.modal-popup .modal-btn.primary {
+  background: linear-gradient(135deg,#c40d23,#e6303a); color: #fff;
+  box-shadow: 0 3px 12px rgba(196,13,35,0.2); margin-bottom: 10px;
+}
+.modal-popup .modal-btn.cancel {
+  background: #f5f0ed; color: #8c6e5e;
+}
+
+/* ===== 专题页主页 ===== */
+.banner {
+  background: linear-gradient(180deg, #ffffff 0%, #fff5f3 50%, #ffe8e5 100%);
+  padding: 32px 20px 24px; text-align: center; position: relative; overflow: hidden; z-index: 1;
+}
+.banner .top-line { font-size: 13px; color: #000; font-weight: 600; letter-spacing: 4px; margin-bottom: 8px; }
+.banner h1 { font-size: 34px; font-weight: 800; color: #c40d23; margin-bottom: 6px; letter-spacing: 4px; }
+.banner .logos { display: flex; flex-direction: column; align-items: center; gap: 8px; margin-top: 14px; }
+.banner .logos span { background: #fff; border: 1px solid #fbd5cf; color: #c40d23; border-radius: 20px; padding: 3px 14px; font-size: 10px; line-height: 1.8; max-width: 92%; text-align: center; }
+.banner .mascot { display: flex; justify-content: center; margin-top: 18px; }
+.intro { background: #fffaf8; border-top: 1px solid #fde5df; }
+.intro p { font-size: 13px; color: #5c3d2e; line-height: 1.9; text-indent: 2em; }
+.cards-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.module-card {
+  background: #fff; border-radius: 14px; padding: 20px 14px; text-align: center;
+  border: 1.5px solid #fde5df; cursor: pointer; transition: all 0.25s;
+}
+.module-card:hover { box-shadow: 0 4px 16px rgba(196,13,35,0.10); border-color: #c40d23; transform: translateY(-2px); }
+.module-card .card-icon { width: 44px; height: 44px; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; }
+.module-card .card-title { font-size: 15px; font-weight: 700; color: #2c1810; }
+.module-card .card-desc { font-size: 11px; color: #b8836e; margin-top: 4px; }
+.module-card-full {
+  grid-column: 1 / -1;
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 16px; text-align: left;
+  background: linear-gradient(135deg, #fff5f3, #fffaf8);
+  border: 2px solid #fbd5cf; border-radius: 14px; cursor: pointer; transition: all 0.25s;
+}
+.module-card-full:hover { box-shadow: 0 4px 16px rgba(196,13,35,0.12); border-color: #c40d23; }
+.module-card-full .mcf-icon { width: 48px; height: 48px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.module-card-full .mcf-title { font-size: 16px; font-weight: 700; color: #2c1810; }
+.module-card-full .mcf-desc { font-size: 12px; color: #b8836e; margin-top: 3px; }
+.module-card-full .mcf-arrow { margin-left: auto; color: #c40d23; font-size: 18px; flex-shrink: 0; }
+/* 合并页面分栏 */
+.together-section { margin-bottom: 6px; }
+.together-section .ts-label { font-size: 13px; font-weight: 700; color: #a06040; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px; }
+.together-section .ts-label::before { content: ''; width: 4px; height: 16px; background: #c40d23; border-radius: 2px; }
+.data-panel { background: linear-gradient(135deg, #fff5f3, #fffaf8); border-radius: 14px; padding: 18px; border: 1px solid #fde5df; }
+.data-numbers { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.data-item { text-align: center; }
+.data-item .num { font-size: 24px; font-weight: 800; color: #c40d23; letter-spacing: -0.5px; }
+.data-item .label { font-size: 10px; color: #b8836e; margin-top: 4px; }
+.data-tabs { display: flex; gap: 0; background: #fde5df; border-radius: 10px; overflow: hidden; }
+.data-tabs .tab { flex: 1; padding: 9px 0; text-align: center; font-size: 12px; color: #a06040; cursor: pointer; font-weight: 500; }
+.data-tabs .tab.active { background: #c40d23; color: #fff; font-weight: 700; }
+.data-rank { margin-top: 12px; }
+.data-rank .row { display: flex; align-items: center; padding: 8px 0; border-bottom: 1px solid #fef0e8; font-size: 12px; }
+.data-rank .row .rank { width: 26px; font-weight: 700; color: #c40d23; font-size: 14px; }
+.data-rank .row .name { flex: 1; color: #3e1f10; font-weight: 500; }
+.data-rank .row .score { color: #b8836e; font-size: 11px; }
+.project-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+.project-card { min-width: 148px; background: #fff; border-radius: 12px; overflow: hidden; border: 1px solid #fde5df; flex-shrink: 0; cursor: pointer; }
+.project-card .cover { height: 90px; display: flex; align-items: center; justify-content: center; }
+.project-card .info { padding: 10px; }
+.project-card .info .pname { font-size: 13px; font-weight: 600; color: #2c1810; }
+.project-card .info .ptag { font-size: 10px; color: #c40d23; margin-top: 3px; font-weight: 500; }
+.project-card .info .pbar { height: 4px; background: #fde5df; border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.project-card .info .pbar .fill { height: 100%; background: #c40d23; border-radius: 2px; }
+.avatar-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.avatar-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+.avatar-scroll .avatar-card { flex: 0 0 100px; scroll-snap-align: start; }
+.avatar-card { text-align: center; padding: 14px 8px; background: #fffaf8; border-radius: 12px; border: 1px solid #fef0e8; cursor: pointer; }
+.avatar-card:hover { border-color: #c40d23; }
+.avatar-card .avt { width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; color: #fff; font-weight: 700; }
+.avatar-card .avt.a1 { background: linear-gradient(135deg, #c40d23, #e6303a); }
+.avatar-card .avt.a2 { background: linear-gradient(135deg, #e6303a, #f55547); }
+.avatar-card .avt.a3 { background: linear-gradient(135deg, #f55547, #ff7a5c); }
+.avatar-card .avt-name { font-size: 13px; font-weight: 600; color: #2c1810; }
+.avatar-card .avt-sub { font-size: 10px; color: #b8836e; margin-top: 2px; }
+.topic-tags { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.topic-tag { padding: 5px 16px; border-radius: 16px; font-size: 12px; background: #fff0ed; color: #c40d23; font-weight: 500; }
+.topic-post { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid #fef0e8; cursor: pointer; }
+.topic-post .post-avatar { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #e6303a, #f55547); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.topic-post .post-body { flex: 1; }
+.topic-post .post-user { font-size: 13px; font-weight: 600; color: #2c1810; }
+.topic-post .post-text { font-size: 12px; color: #5c3d2e; margin-top: 4px; line-height: 1.6; }
+.topic-post .post-meta { font-size: 10px; color: #c9a899; margin-top: 6px; }
+
+/* ===== 达人战队详情 ===== */
+.profile-hero { text-align: center; padding: 20px 18px 28px; }
+.profile-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 14px;
+  background: linear-gradient(135deg, #c40d23, #e6303a); display: flex; align-items: center;
+  justify-content: center; font-size: 32px; color: #fff; font-weight: 700; }
+.profile-name { font-size: 20px; font-weight: 700; color: #2c1810; }
+.profile-title { font-size: 13px; color: #c40d23; font-weight: 500; margin-top: 4px; }
+.profile-stats { display: flex; justify-content: center; gap: 28px; margin-top: 14px; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 18px; font-weight: 800; color: #c40d23; }
+.stat-label { font-size: 11px; color: #b8836e; margin-top: 2px; }
+.profile-bio { font-size: 13px; color: #5c3d2e; line-height: 1.8; margin-top: 14px;
+  background: #fffaf8; border-radius: 12px; padding: 14px; border: 1px solid #fef0e8; }
+.team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.team-member { text-align: center; padding: 12px 6px; background: #fffaf8;
+  border-radius: 12px; border: 1px solid #fef0e8; }
+.team-member .mavt { width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; font-weight: 700; }
+.team-member .mname { font-size: 12px; font-weight: 600; color: #2c1810; }
+.team-member .mrole { font-size: 10px; color: #b8836e; margin-top: 2px; }
+.video-list { display: flex; flex-direction: column; gap: 10px; }
+.video-card { background: #fffaf8; border-radius: 12px; padding: 12px;
+  border: 1px solid #fef0e8; display: flex; gap: 10px; align-items: center; cursor: pointer; }
+.video-card:hover { border-color: #c40d23; }
+.video-cover { width: 90px; height: 60px; border-radius: 8px;
+  background: linear-gradient(135deg, #e6303a, #f55547); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; }
+.video-info { flex: 1; }
+.video-title { font-size: 13px; font-weight: 600; color: #2c1810; }
+.video-meta { font-size: 10px; color: #b8836e; margin-top: 4px; }
+
+/* ===== 新善小队详情 ===== */
+.squad-hero { text-align: center; padding: 20px 18px 28px; }
+.squad-badge { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 14px;
+  background: linear-gradient(135deg, #c40d23, #e6303a); display: flex; align-items: center;
+  justify-content: center; font-size: 32px; color: #fff; font-weight: 700; }
+.squad-name { font-size: 20px; font-weight: 700; color: #2c1810; }
+.squad-area { font-size: 13px; color: #c40d23; font-weight: 500; margin-top: 4px; }
+.squad-stats { display: flex; justify-content: center; gap: 28px; margin-top: 14px; }
+.squad-slogan { font-size: 13px; color: #5c3d2e; line-height: 1.8; margin-top: 14px;
+  background: #fffaf8; border-radius: 12px; padding: 14px; border: 1px solid #fef0e8; }
+.member-list { display: flex; flex-direction: column; gap: 8px; }
+.member-row { display: flex; align-items: center; gap: 10px; padding: 10px;
+  background: #fffaf8; border-radius: 12px; border: 1px solid #fef0e8; }
+.member-row .mavt { width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; font-weight: 700; flex-shrink: 0; }
+.member-row .minfo { flex: 1; }
+.member-row .mname { font-size: 13px; font-weight: 600; color: #2c1810; }
+.member-row .mstat { font-size: 11px; color: #b8836e; }
+.member-row .mscore { font-size: 14px; font-weight: 700; color: #c40d23; }
+
+/* ===== 小红花打卡 ===== */
+.flower-hero { text-align: center; padding: 24px 18px; background: linear-gradient(180deg, #fff5f3, #fff); }
+.flower-count { font-size: 56px; font-weight: 800; color: #c40d23; letter-spacing: -2px; }
+.flower-label { font-size: 14px; color: #b8836e; margin-top: 4px; }
+.flower-display { display: flex; justify-content: center; gap: 6px; margin: 16px 0; flex-wrap: wrap; }
+.flower-item { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; }
+.flower-item.earned { opacity: 1; }
+.flower-item.empty { opacity: 0.2; }
+.stats-row { display: flex; justify-content: space-around; margin-top: 14px; }
+.stat-box { text-align: center; padding: 10px 14px; background: #fffaf8; border-radius: 12px; border: 1px solid #fef0e8; min-width: 70px; }
+.stat-box .snum { font-size: 18px; font-weight: 800; color: #c40d23; }
+.stat-box .slabel { font-size: 10px; color: #b8836e; margin-top: 2px; }
+.checkin-list { display: flex; flex-direction: column; gap: 8px; }
+.checkin-row { display: flex; align-items: center; gap: 10px; padding: 12px;
+  background: #fffaf8; border-radius: 12px; border: 1px solid #fef0e8; }
+.checkin-row .cicon { width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.checkin-row .cbody { flex: 1; }
+.checkin-row .ctitle { font-size: 13px; font-weight: 600; color: #2c1810; }
+.checkin-row .cdate { font-size: 11px; color: #b8836e; margin-top: 2px; }
+.checkin-row .creward { font-size: 13px; font-weight: 700; color: #c40d23; }
+.badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.badge-item { text-align: center; padding: 12px 4px; border-radius: 12px; }
+.badge-item.got { background: #fffaf8; border: 1px solid #fef0e8; }
+.badge-item.locked { background: #fafafa; border: 1px solid #f0f0f0; opacity: 0.6; }
+.badge-icon { width: 44px; height: 44px; border-radius: 50%; margin: 0 auto 6px;
+  display: flex; align-items: center; justify-content: center; }
+.badge-name { font-size: 11px; color: #2c1810; font-weight: 500; }
+.badge-desc { font-size: 9px; color: #b8836e; margin-top: 2px; }
+.checkin-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+.checkin-action {
+  padding: 16px 10px; border-radius: 14px; text-align: center; border: 1.5px solid #fde5df;
+  background: #fff; cursor: pointer; transition: all 0.2s;
+}
+.checkin-action:hover { border-color: #c40d23; box-shadow: 0 4px 12px rgba(196,13,35,0.08); }
+.checkin-action .atitle { font-size: 13px; font-weight: 700; color: #2c1810; }
+.checkin-action .adesc { font-size: 10px; color: #b8836e; margin-top: 4px; }
+
+/* ===== 公益项目列表 ===== */
+.filter-tabs { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.filter-tab { padding: 6px 16px; border-radius: 16px; font-size: 12px; border: 1px solid #fbd5cf;
+  background: #fff; color: #a06040; cursor: pointer; font-weight: 500; transition: all 0.2s; }
+.filter-tab.active { background: #c40d23; color: #fff; border-color: #c40d23; }
+.filter-tab:hover:not(.active) { border-color: #c40d23; color: #c40d23; }
+.project-list { display: flex; flex-direction: column; gap: 12px; }
+.project-card-big { background: #fff; border-radius: 14px; border: 1px solid #fde5df; overflow: hidden;
+  cursor: pointer; transition: all 0.25s; }
+.project-card-big:hover { box-shadow: 0 4px 16px rgba(196,13,35,0.10); border-color: #c40d23; }
+.project-cover { height: 140px; display: flex; align-items: center; justify-content: center; }
+.project-info-card { padding: 14px; }
+.project-name { font-size: 15px; font-weight: 700; color: #2c1810; margin-bottom: 6px; }
+.project-tags { display: flex; gap: 6px; margin-bottom: 8px; }
+.project-tag { padding: 2px 10px; border-radius: 10px; font-size: 10px; font-weight: 600; }
+.tag-elderly { background: #fff0ed; color: #c40d23; }
+.tag-child { background: #fff8f0; color: #e68a2e; }
+.tag-education { background: #f0f5ff; color: #4a7fd4; }
+.tag-rural { background: #f0fff4; color: #3a9d5e; }
+.project-bar { height: 5px; background: #fde5df; border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+.project-bar .fill { height: 100%; background: #c40d23; border-radius: 3px; }
+.project-progress { font-size: 11px; color: #b8836e; display: flex; justify-content: space-between; }
+
+/* ===== 公益项目详情 ===== */
+.project-cover-big { height: 200px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #fff5f3, #ffe8e5); }
+.project-title { font-size: 18px; font-weight: 700; color: #2c1810; margin-bottom: 8px; }
+.progress-box { background: #fffaf8; border-radius: 12px; padding: 14px; border: 1px solid #fef0e8; margin-bottom: 14px; }
+.progress-header { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.progress-label { font-size: 12px; color: #b8836e; }
+.progress-value { font-size: 12px; font-weight: 700; color: #c40d23; }
+.progress-bar { height: 8px; background: #fde5df; border-radius: 4px; overflow: hidden; margin-bottom: 6px; }
+.progress-bar .fill { height: 100%; background: linear-gradient(90deg, #c40d23, #e6303a); border-radius: 4px; }
+.progress-numbers { display: flex; justify-content: space-between; font-size: 14px; font-weight: 700; color: #2c1810; }
+.progress-numbers span:first-child { color: #c40d23; }
+.info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.info-item { background: #fffaf8; border-radius: 10px; padding: 12px; border: 1px solid #fef0e8; }
+.info-item .ilabel { font-size: 10px; color: #b8836e; }
+.info-item .ivalue { font-size: 13px; font-weight: 600; color: #2c1810; margin-top: 2px; }
+.desc-text { font-size: 13px; color: #5c3d2e; line-height: 1.9; }
+
+/* ===== 数据看板 ===== */
+.stats-overview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+.stat-card { text-align: center; background: linear-gradient(135deg, #fff5f3, #fffaf8);
+  border-radius: 14px; padding: 16px 8px; border: 1px solid #fde5df; }
+.stat-card .snum { font-size: 24px; font-weight: 800; color: #c40d23; letter-spacing: -0.5px; }
+.stat-card .slabel { font-size: 11px; color: #b8836e; margin-top: 4px; }
+.rank-tabs { display: flex; background: #fde5df; border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.rank-tab { flex: 1; padding: 10px 0; text-align: center; font-size: 13px; color: #a06040; cursor: pointer; font-weight: 500; }
+.rank-tab.active { background: #c40d23; color: #fff; font-weight: 700; }
+.rank-list { margin-top: 8px; }
+.rank-list-compact .rank-row { padding: 9px 10px; }
+.rank-list-compact .rank-num { width: 26px; font-size: 14px; font-weight: 800; }
+.rank-list-compact .score { font-size: 12px; }
+.rank-list-compact .name { font-size: 13px; font-weight: 500; color: #2c1810; }
+/* 排名数字渐变红色到灰色 */
+.rank-num.r-1 { color: #c40d23; font-weight: 800; }
+.rank-num.r-2 { color: #d12b34; font-weight: 800; }
+.rank-num.r-3 { color: #d83a3f; font-weight: 800; }
+.rank-num.r-4 { color: #de4a4a; font-weight: 800; }
+.rank-num.r-5 { color: #e15a55; font-weight: 700; }
+.rank-num.r-6 { color: #e46968; font-weight: 700; }
+.rank-num.r-7 { color: #e67876; font-weight: 700; }
+.rank-num.r-8 { color: #e98785; font-weight: 700; }
+.rank-num.r-9 { color: #ec9693; font-weight: 600; }
+.rank-num.r-10 { color: #eea3a0; font-weight: 600; }
+.rank-num.r-11 { color: #efaeac; font-weight: 600; }
+.rank-num.r-12 { color: #f0b9b8; font-weight: 600; }
+.rank-num.r-13 { color: #f1c4c4; font-weight: 500; }
+.rank-num.r-14 { color: #f2cfcf; font-weight: 500; }
+.rank-num.r-15 { color: #f3d9d9; font-weight: 500; }
+.rank-num.r-16 { color: #f4e2e2; font-weight: 500; }
+.rank-num.r-17 { color: #f5eaea; }
+.rank-num.r-18 { color: #f1edec; }
+.rank-num.r-19 { color: #ede9e8; }
+.rank-num.r-20 { color: #e8e4e3; }
+.rank-num.r-21 { color: #d8d4d3; }
+.rank-num.r-22 { color: #c8c4c3; }
+.rank-num.r-23 { color: #b8b4b3; }
+.rank-num.r-24 { color: #a8a4a3; }
+.rank-num.r-25 { color: #989493; }
+.rank-num.r-26 { color: #888483; }
+.rank-num.r-27 { color: #787473; }
+.rank-num.r-28 { color: #686463; }
+.rank-num.r-29 { color: #585453; }
+.rank-num.r-30 { color: #484443; }
+
+.rank-row { display: flex; align-items: center; padding: 10px 12px; border-bottom: 1px solid #fef0e8; border-radius: 8px; }
+.rank-row:nth-child(-n+3) { background: #fffaf8; }
+.rank-num { width: 28px; font-size: 16px; font-weight: 800; text-align: center; }
+.rank-num.top { color: #c40d23; }
+.rank-num.normal { color: #b8836e; }
+.rank-row .name { flex: 1; color: #2c1810; font-weight: 500; font-size: 12px; }
+.rank-row .score { color: #b8836e; font-size: 11px; }
+.rank-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 10px; color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+.rank-info { flex: 1; }
+.rank-name { font-size: 13px; font-weight: 600; color: #2c1810; }
+.rank-detail { font-size: 10px; color: #b8836e; }
+.rank-score { font-size: 14px; font-weight: 700; color: #c40d23; }
+
+/* ===== 好事社区帖子详情 ===== */
+.post-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.post-avt { width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, #e6303a, #f55547); display: flex;
+  align-items: center; justify-content: center; flex-shrink: 0; }
+.post-user-detail { font-size: 14px; font-weight: 700; color: #2c1810; }
+.post-time { font-size: 11px; color: #b8836e; }
+.post-content { font-size: 14px; color: #3e1f10; line-height: 1.8; margin-bottom: 14px; }
+.post-tags-detail { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+.post-tag-detail { padding: 3px 12px; border-radius: 12px; font-size: 11px; background: #fff0ed; color: #c40d23; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.post-tag-detail:hover { background: #fde0d5; }
+.post-actions { display: flex; justify-content: space-around; padding: 14px 0;
+  border-top: 1px solid #fef0e8; border-bottom: 1px solid #fef0e8; margin-bottom: 14px; }
+.action-item { text-align: center; color: #b8836e; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.action-item svg { display: block; }
+.comment-list { display: flex; flex-direction: column; gap: 12px; }
+.comment-row { display: flex; gap: 8px; }
+.comment-avt { width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 12px; color: #fff; font-weight: 700; }
+.comment-body { flex: 1; }
+.comment-user { font-size: 12px; font-weight: 600; color: #2c1810; }
+.comment-text { font-size: 12px; color: #5c3d2e; margin-top: 4px; line-height: 1.6; }
+.comment-meta { font-size: 10px; color: #c9a899; margin-top: 4px; }
+
+/* ===== 好事社区帖子列表 ===== */
+.community-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; background: #fffaf8; border-bottom: 1px solid #fde5df; }
+.community-title { font-size: 16px; font-weight: 700; color: #c40d23; }
+.post-btn-sm, .create-publish-btn {
+  padding: 8px 18px; border-radius: 18px; border: none; color: #fff; font-size: 13px; font-weight: 600;
+  background: linear-gradient(135deg, #c40d23, #e6303a); cursor: pointer; letter-spacing: 0.5px;
+}
+.post-feed { padding: 0 18px; }
+.post-feed .topic-post { padding: 14px 0; }
+
+/* ===== 发帖编辑页 ===== */
+.create-editor { padding: 18px; }
+.create-textarea {
+  width: 100%; min-height: 160px; border: 1px solid #fde5df; border-radius: 12px; padding: 14px;
+  font-size: 14px; color: #2c1810; font-family: inherit; resize: vertical; outline: none;
+  transition: border-color 0.2s; line-height: 1.7;
+}
+.create-textarea:focus { border-color: #c40d23; }
+.create-textarea::placeholder { color: #c9a899; }
+.create-tags { display: flex; gap: 8px; margin: 12px 0; }
+.create-tag { padding: 4px 14px; border-radius: 14px; font-size: 11px; cursor: pointer; border: 1px solid #fbd5cf; background: #fff; color: #a06040; }
+.create-tag.selected { background: #c40d23; color: #fff; border-color: #c40d23; }
+.upload-area {
+  margin-top: 12px; border: 2px dashed #fbd5cf; border-radius: 14px; padding: 32px; text-align: center;
+  cursor: pointer; transition: all 0.2s; background: #fffaf8;
+}
+.upload-area:hover { border-color: #c40d23; background: #fff5f3; }
+.upload-icon { font-size: 36px; color: #c40d23; margin-bottom: 8px; display: block; }
+.upload-text { font-size: 13px; color: #b8836e; }
+.upload-hint { font-size: 10px; color: #c9a899; margin-top: 4px; }
+.image-preview { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.image-preview-item { width: 80px; height: 80px; border-radius: 10px; object-fit: cover; border: 1px solid #fde5df; position: relative; }
+.image-preview-item .del-btn { position: absolute; top: -6px; right: -6px; width: 20px; height: 20px; border-radius: 50%; background: #c40d23; color: #fff; font-size: 11px; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.create-toolbar { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.create-toolbar .char-count { font-size: 12px; color: #b8836e; }
+
+/* ===== 达人心愿 ===== */
+.wish-list { display: flex; flex-direction: column; gap: 14px; }
+.wish-row {
+  display: flex; gap: 14px; padding: 14px;
+  background: #fff; border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(230,80,80,0.08);
+  border: 1px solid #fde5df; cursor: pointer;
+}
+.wish-row-photo {
+  width: 88px; height: 88px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px; font-weight: 700; color: #fff; flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.wish-row-photo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.18) 100%);
+}
+.wish-row-body { flex: 1; min-width: 0; }
+.wish-row-tag {
+  display: inline-block; padding: 2px 8px;
+  background: #fff0ed; color: #c40d23;
+  font-size: 10px; border-radius: 8px; margin-bottom: 6px; font-weight: 500;
+}
+.wish-row-title { font-size: 14px; font-weight: 700; color: #2c1810; line-height: 1.4; }
+.wish-row-meta { font-size: 11px; color: #b8836e; margin-top: 6px; }
+.wish-row-bar { height: 4px; background: #fde5df; border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.wish-row-bar-fill { height: 100%; background: linear-gradient(90deg,#ff9a9e,#fad0c4,#ffd1ff); border-radius: 2px; }
+
+/* ===== 达人心愿详情 ===== */
+.wish-hero {
+  position: relative; height: 240px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  padding-bottom: 60px; overflow: hidden;
+}
+.wish-hero-bg { position: absolute; inset: 0; z-index: 0; }
+.wish-hero-content { position: relative; z-index: 2; text-align: center; color: #fff; }
+.wish-hero-pretitle { font-size: 12px; letter-spacing: 3px; opacity: 0.95; margin-bottom: 6px; }
+.wish-hero-title {
+  font-size: 22px; font-weight: 800; color: #fff;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  line-height: 1.3; padding: 0 28px;
+}
+.wish-hero-avatar {
+  width: 70px; height: 70px; border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  color: #c40d23; font-size: 32px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin: 14px auto 0;
+  border: 3px solid #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.wish-hero-name {
+  position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  background: rgba(255,255,255,0.95);
+  color: #c40d23; padding: 14px 6px;
+  font-size: 11px; font-weight: 600;
+  border-radius: 6px;
+  letter-spacing: 2px;
+  z-index: 3;
+}
+.wish-action-box {
+  margin-top: -20px;
+  background: #fff; border-radius: 16px;
+  padding: 18px 18px 14px;
+  box-shadow: 0 6px 18px rgba(230,80,80,0.10);
+  border: 1px solid #fde5df;
+  position: relative; z-index: 5;
+}
+.wish-progress-line {
+  font-size: 13px; color: #2c1810; margin-bottom: 8px; text-align: center;
+}
+.wish-progress {
+  position: relative; height: 10px;
+  background: linear-gradient(90deg,#fde5df,#fef0e8);
+  border-radius: 5px; overflow: visible; margin-bottom: 18px;
+}
+.wish-progress-fill {
+  height: 100%; background: linear-gradient(90deg,#ff9a9e,#fad0c4);
+  border-radius: 5px; transition: width 0.4s ease;
+}
+.wish-progress-flower {
+  position: absolute; top: 50%; right: -2px;
+  transform: translate(50%,-50%);
+  font-size: 18px; color: #c40d23;
+}
+.wish-btn {
+  display: block; width: 100%; padding: 14px;
+  background: linear-gradient(135deg,#ff7675 0%,#c40d23 100%);
+  color: #fff; border: none; border-radius: 28px;
+  font-size: 16px; font-weight: 700; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(196,13,35,0.30);
+  letter-spacing: 2px;
+}
+.wish-btn:disabled { background: #ccc; box-shadow: none; cursor: not-allowed; }
+.wish-tip { font-size: 11px; color: #b8836e; text-align: center; margin-top: 10px; }
+
+/* ===== 善行打卡 - 地区列表 ===== */
+.region-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.region-card { background: #fff; border-radius: 14px; padding: 22px 16px; text-align: center; border: 1.5px solid #fde5df; cursor: pointer; transition: all 0.25s; }
+.region-card:hover { border-color: #c40d23; box-shadow: 0 4px 16px rgba(196,13,35,0.10); transform: translateY(-2px); }
+.region-card .rc-letter { width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; color: #fff; font-weight: 700; }
+.region-card .rc-name { font-size: 15px; font-weight: 700; color: #2c1810; }
+.region-card .rc-count { font-size: 11px; color: #b8836e; margin-top: 4px; }
+
+/* ===== 善行打卡 - 话题列表 ===== */
+.topic-card-list { display: flex; flex-direction: column; gap: 10px; }
+.topic-card { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #fde5df; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+.topic-card:hover { border-color: #c40d23; }
+.topic-card .tc-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
+.topic-card .tc-body { flex: 1; }
+.topic-card .tc-title { font-size: 14px; font-weight: 600; color: #2c1810; }
+.topic-card .tc-meta { font-size: 11px; color: #b8836e; margin-top: 3px; }
+
+/* ===== 动态话题卡片（善行打卡话题页） ===== */
+.topic-dynamic-list { display: flex; flex-direction: column; gap: 10px; }
+.topic-card-big { background: #fff; border-radius: 12px; padding: 16px; border: 1px solid #fde5df; cursor: pointer; display: flex; align-items: center; gap: 12px; transition: all 0.2s; }
+.topic-card-big:hover { border-color: #c40d23; }
+.topic-card-big .tc-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #fff8f6; border: 1.5px solid #fde5df; }
+.topic-card-big .tc-body { flex: 1; }
+.topic-card-big .tc-name { font-size: 14px; font-weight: 600; color: #2c1810; }
+.topic-card-big .tc-count { font-size: 11px; color: #b8836e; margin-top: 3px; }
+.topic-card-big .tc-arrow { font-size: 20px; color: #c9a899; flex-shrink: 0; }
+
+/* ===== 动态帖子流卡片 ===== */
+.post-dynamic-list { display: flex; flex-direction: column; gap: 16px; }
+.post-cover-big-img { height: 180px; display: flex; align-items: center; justify-content: center; }
+.pcb-info { padding: 14px; }
+.pcb-text { font-size: 13px; color: #5c3d2e; line-height: 1.6; }
+.pcb-user { font-size: 11px; color: #b8836e; margin-top: 8px; }
+
+/* ===== 锁定话题标签 ===== */
+.locked-tag { pointer-events: none; cursor: default; opacity: 0.85; }
+
+/* ===== 善行打卡 - 话题帖子流（大图） ===== */
+.post-feed-big { display: flex; flex-direction: column; gap: 16px; }
+.post-card-big { background: #fff; border-radius: 14px; overflow: hidden; border: 1px solid #fde5df; cursor: pointer; }
+.post-card-big .pc-cover { height: 180px; display: flex; align-items: center; justify-content: center; }
+.post-card-big .pc-info { padding: 14px; }
+.post-card-big .pc-title { font-size: 14px; font-weight: 600; color: #2c1810; line-height: 1.5; }
+.post-card-big .pc-text { font-size: 12px; color: #5c3d2e; margin-top: 6px; line-height: 1.6; }
+.post-card-big .pc-meta { font-size: 10px; color: #c9a899; margin-top: 8px; }
+
+/* ===== 新善项目大图列表 ===== */
+.xinshan-list { display: flex; flex-direction: column; gap: 14px; }
+.xinshan-card { background: #fff; border-radius: 14px; overflow: hidden; border: 1.5px solid #fde5df; cursor: pointer; transition: all 0.25s; }
+.xinshan-card:hover { box-shadow: 0 4px 16px rgba(196,13,35,0.10); border-color: #c40d23; transform: translateY(-2px); }
+.xinshan-card .xc-cover { height: 160px; display: flex; align-items: center; justify-content: center; }
+.xinshan-card .xc-info { padding: 16px; }
+.xinshan-card .xc-title { font-size: 16px; font-weight: 700; color: #2c1810; }
+.xinshan-card .xc-desc { font-size: 12px; color: #5c3d2e; margin-top: 6px; line-height: 1.6; }
+.xinshan-card .xc-tag { display: inline-block; padding: 3px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; background: #fff0ed; color: #c40d23; margin-top: 8px; }
+
+/* ===== 话题榜关键词标签 ===== */
+.keyword-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+.keyword-tag { padding: 4px 12px; border-radius: 14px; font-size: 11px; font-weight: 600; background: #fff0ed; color: #c40d23; border: 1px solid #fbd5cf; }
+.keyword-tag.hot { background: #c40d23; color: #fff; border-color: #c40d23; }
+
+/* ===== 悬浮发帖按钮 ===== */
+.floating-post-btn {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  width: calc(375px - 36px); max-width: calc(100vw - 36px);
+  padding: 14px 0; border-radius: 28px; border: none; color: #fff; font-size: 15px; font-weight: 700;
+  background: linear-gradient(135deg, #c40d23, #e6303a); cursor: pointer; letter-spacing: 2px;
+  box-shadow: 0 6px 24px rgba(196,13,35,0.35); z-index: 999; text-align: center;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.floating-post-btn:hover { transform: translateX(-50%) translateY(-2px); box-shadow: 0 8px 30px rgba(196,13,35,0.45); }
+</style>
+</head>
+<body>
+
+<!-- ==================== 主页 ==================== -->
+<div id="page-main" class="page-container active">
+<div class="page">
+  <div class="float-layer">
+    <svg class="float-item" width="36" height="36" viewBox="0 0 36 36">
+      <g transform="translate(18,18)"><path d="M0,-14 C4,-14 6,-10 6,-6 C6,-2 4,2 0,2 C-4,2 -6,-2 -6,-6 C-6,-10 -4,-14 0,-14 Z" fill="#e6303a"/><circle cx="0" cy="-2" r="3" fill="#fff"/></g>
+    </svg>
+    <svg class="float-item" width="24" height="24" viewBox="0 0 24 24">
+      <path d="M12,21 C12,21 4,15 4,9 C4,5 7,3 9,3 C10.5,3 12,4 12,4 C12,4 13.5,3 15,3 C17,3 20,5 20,9 C20,15 12,21 12,21 Z" fill="#e6303a"/>
+    </svg>
+    <svg class="float-item" width="30" height="30" viewBox="0 0 36 36">
+      <g transform="translate(18,18)"><path d="M0,-14 C4,-14 6,-10 6,-6 C6,-2 4,2 0,2 C-4,2 -6,-2 -6,-6 C-6,-10 -4,-14 0,-14 Z" fill="#e6303a"/><circle cx="0" cy="-2" r="3" fill="#fff"/></g>
+    </svg>
+    <svg class="float-item" width="20" height="20" viewBox="0 0 24 24">
+      <path d="M12,21 C12,21 4,15 4,9 C4,5 7,3 9,3 C10.5,3 12,4 12,4 C12,4 13.5,3 15,3 C17,3 20,5 20,9 C20,15 12,21 12,21 Z" fill="#e6303a"/>
+    </svg>
+    <svg class="float-item" width="28" height="28" viewBox="0 0 36 36">
+      <g transform="translate(18,18)"><path d="M0,-14 C4,-14 6,-10 6,-6 C6,-2 4,2 0,2 C-4,2 -6,-2 -6,-6 C-6,-10 -4,-14 0,-14 Z" fill="#e6303a"/><circle cx="0" cy="-2" r="3" fill="#fff"/></g>
+    </svg>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="top-line">新时代&nbsp;&nbsp;新阶层&nbsp;&nbsp;新公益</div>
+    <h1>新善中国</h1>
+    <div class="logos">
+      <span>指导单位：中央统战部六局、腾讯集团</span>
+      <span>主办单位：全国新的社会阶层人士服务团&ldquo;新善中国&rdquo;组委会、腾讯SSV（可持续社会价值事业部）</span>
+      <span>支持单位：上海联劝公益基金会、腾讯公益平台</span>
+    </div>
+    <div class="mascot">
+      <svg width="180" height="120" viewBox="0 0 180 120">
+        <path d="M30,30 C30,25 33,22 36,22 C38,22 40,24 40,24 C40,24 42,22 44,22 C47,22 50,25 50,30 C50,36 40,44 40,44 C40,44 30,36 30,30 Z" fill="#fbd5cf"/>
+        <path d="M140,20 C140,16 142,14 144,14 C146,14 147,15 147,15 C147,15 148,14 150,14 C152,14 154,16 154,20 C154,24 147,30 147,30 C147,30 140,24 140,20 Z" fill="#fbd5cf"/>
+        <g transform="translate(90,60)">
+          <ellipse cx="0" cy="-22" rx="11" ry="18" fill="#e6303a"/>
+          <ellipse cx="0" cy="-22" rx="11" ry="18" fill="#e6303a" transform="rotate(72)"/>
+          <ellipse cx="0" cy="-22" rx="11" ry="18" fill="#e6303a" transform="rotate(144)"/>
+          <ellipse cx="0" cy="-22" rx="11" ry="18" fill="#e6303a" transform="rotate(216)"/>
+          <ellipse cx="0" cy="-22" rx="11" ry="18" fill="#e6303a" transform="rotate(288)"/>
+          <circle cx="0" cy="0" r="11" fill="#ffffff"/>
+          <circle cx="0" cy="0" r="3" fill="#e6303a"/>
+        </g>
+        <path d="M125,55 C125,52 127,50 129,50 C130,50 131,51 131,51 C131,51 132,50 133,50 C135,50 137,52 137,55 C137,58 131,62 131,62 C131,62 125,58 125,55 Z" fill="#e6303a"/>
+        <ellipse cx="90" cy="95" rx="14" ry="18" fill="#ffffff" stroke="#f0d5cf" stroke-width="1"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- 活动介绍 -->
+  <div class="section intro">
+    <div class="section-label">活动介绍</div>
+    <p>&ldquo;新善中国&rdquo;品牌活动是全国新的社会阶层人士服务团以&ldquo;新时代、新阶层、新公益&rdquo;为理念发起的一项公益行动。旨在以&ldquo;善&rdquo;为纽带，动员支持广大新的社会阶层人士立足专长，围绕社会公益、文化传承、基层治理、乡村振兴等领域发现善、践行善、传播善，把千千万万凡人善举凝聚成时代善风。</p>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 核心板块 -->
+  <div class="section">
+    <div class="cards-grid">
+      <div class="module-card" onclick="navigate('shanxing-regions')">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 36 36"><circle cx="12" cy="13" r="5" fill="#e6303a"/><circle cx="24" cy="13" r="5" fill="#e6303a"/><path d="M4,30 C4,24 8,21 12,21 C16,21 20,24 20,30 Z" fill="#e6303a"/><path d="M16,30 C16,24 20,21 24,21 C28,21 32,24 32,30 Z" fill="#e6303a"/></svg></div>
+        <div class="card-title">善行打卡</div>
+      </div>
+      <div class="module-card" onclick="navigate('xinshan-together')">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#e6303a"/></svg></div>
+        <div class="card-title">新善项目</div>
+      </div>
+      <div class="module-card" onclick="navigate('daren-list')">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 36 36"><polygon points="18,4 22,14 32,14 24,21 27,31 18,25 9,31 12,21 4,14 14,14" fill="#e6303a"/></svg></div>
+        <div class="card-title">大V战队</div>
+      </div>
+      <div class="module-card" onclick="navigate('daren-wish-list')">
+        <div class="card-icon"><svg width="36" height="36" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#e6303a" opacity="0.4"/><path d="M18,28 C18,28 8,21 8,14 C8,10 10,7 13,7 C15,7 17,8 18,10 C19,8 21,7 23,7 C26,7 28,10 28,14 C28,21 18,28 18,28 Z" fill="#e6303a"/></svg></div>
+        <div class="card-title">达人心愿</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 数据看板 -->
+  <div class="section">
+    <div class="section-label">数据看板</div>
+    <div class="data-panel">
+      <div class="data-numbers">
+        <div class="data-item"><div class="num">128,560</div><div class="label">参与专题页人数</div></div>
+        <div class="data-item"><div class="num">3,826</div><div class="label">话题数量</div></div>
+        <div class="data-item"><div class="num">560万</div><div class="label">筹款金额</div></div>
+      </div>
+      <div class="data-tabs">
+        <div class="tab active" onclick="switchMainTab('region', this)">地区榜</div><div class="tab" onclick="switchMainTab('topic', this)">话题榜</div>
+      </div>
+      <div class="data-rank" id="main-rank-region">
+        <div class="rank-row"><span class="rank-num rank-red">1</span><span class="name">北京新联会新善小队</span><span class="score">32,150人次</span></div>
+        <div class="rank-row"><span class="rank-num rank-red">2</span><span class="name">广东新联会新善小队</span><span class="score">28,920人次</span></div>
+        <div class="rank-row"><span class="rank-num rank-red">3</span><span class="name">浙江新联会新善小队</span><span class="score">21,840人次</span></div>
+      </div>
+      <div class="data-rank" id="main-rank-topic" style="display:none">
+        <div class="rank-row"><span class="rank-num rank-red">1</span><span class="name">#一起敬老</span><span class="score">826条</span></div>
+        <div class="rank-row"><span class="rank-num rank-red">2</span><span class="name">#一起捡垃圾</span><span class="score">712条</span></div>
+        <div class="rank-row"><span class="rank-num rank-red">3</span><span class="name">#一起助学</span><span class="score">658条</span></div>
+      </div>
+    </div>
+    <div class="topic-btn" style="margin-top:12px" onclick="navigate('data')">查看完整数据看板</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 新善项目 -->
+  <div class="section">
+    <div class="section-label">新善项目</div>
+    <div class="project-scroll">
+      <div class="project-card" onclick="navigate('project-detail')">
+        <div class="cover" style="background:linear-gradient(135deg,#fff5f3,#ffe8e5)"><svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="20" r="8" fill="#e6303a" opacity="0.6"/><path d="M15,38 C15,32 19,28 25,28 C31,28 35,32 35,38 L35,40 L15,40 Z" fill="#e6303a" opacity="0.6"/></svg></div>
+        <div class="info"><div class="pname">乡村敬老关爱行动</div><div class="ptag">敬老</div><div class="pbar"><div class="fill" style="width:72%"></div></div></div>
+      </div>
+      <div class="project-card" onclick="navigate('project-detail')">
+        <div class="cover" style="background:linear-gradient(135deg,#f0f5ff,#e8edff)"><svg width="50" height="50" viewBox="0 0 50 50"><rect x="14" y="20" width="22" height="18" rx="2" fill="#4a7fd4" opacity="0.5"/><circle cx="25" cy="14" r="6" fill="#4a7fd4" opacity="0.5"/></svg></div>
+        <div class="info"><div class="pname">困境儿童助学计划</div><div class="ptag">助学</div><div class="pbar"><div class="fill" style="width:45%"></div></div></div>
+      </div>
+      <div class="project-card" onclick="navigate('project-detail')">
+        <div class="cover" style="background:linear-gradient(135deg,#f0fff4,#e0ffe8)"><svg width="50" height="50" viewBox="0 0 50 50"><path d="M25,12 L25,32 M15,22 L35,22" stroke="#3a9d5e" stroke-width="3" opacity="0.5"/><circle cx="25" cy="22" r="14" fill="none" stroke="#3a9d5e" stroke-width="2" opacity="0.5"/></svg></div>
+        <div class="info"><div class="pname">乡村振兴助农工程</div><div class="ptag">乡村振兴</div><div class="pbar"><div class="fill" style="width:60%"></div></div></div>
+      </div>
+      <div class="project-card" onclick="navigate('project-detail')">
+        <div class="cover" style="background:linear-gradient(135deg,#fff8f0,#ffeedd)"><svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="18" r="7" fill="#e68a2e" opacity="0.5"/><path d="M14,38 C14,32 19,28 25,28 C31,28 36,32 36,38 Z" fill="#e68a2e" opacity="0.5"/></svg></div>
+        <div class="info"><div class="pname">留守儿童陪伴计划</div><div class="ptag">助幼</div><div class="pbar"><div class="fill" style="width:33%"></div></div></div>
+      </div>
+    </div>
+    <div class="topic-btn" style="margin-top:12px" onclick="navigate('xinshan-together')">查看全部公益项目</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 大V战队 -->
+  <div class="section">
+    <div class="section-label">大V战队</div>
+    <div class="avatar-scroll">
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a1">李</div><div class="avt-name">李明</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a2">王</div><div class="avt-name">王芳</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a3">陈</div><div class="avt-name">陈华</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a1">张</div><div class="avt-name">张悦</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a2">赵</div><div class="avt-name">赵磊</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a3">刘</div><div class="avt-name">刘思</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a1">周</div><div class="avt-name">周婷</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a2">孙</div><div class="avt-name">孙洋</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a3">吴</div><div class="avt-name">吴凡</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-list')"><div class="avt a1">郑</div><div class="avt-name">郑凯</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 善行打卡 -->
+  <div class="section">
+    <div class="section-label">善行打卡</div>
+    <div class="avatar-scroll">
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a1">京</div><div class="avt-name">北京新联会新善小队</div><div class="avt-sub">32,150人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a2">沪</div><div class="avt-name">上海新联会新善小队</div><div class="avt-sub">18,620人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a3">粤</div><div class="avt-name">广东新联会新善小队</div><div class="avt-sub">28,920人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a1">浙</div><div class="avt-name">浙江新联会新善小队</div><div class="avt-sub">21,840人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a2">湘</div><div class="avt-name">湖南新联会新善小队</div><div class="avt-sub">18,500人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a3">川</div><div class="avt-name">四川新联会新善小队</div><div class="avt-sub">15,200人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a1">苏</div><div class="avt-name">江苏新联会新善小队</div><div class="avt-sub">14,300人次 · 查看详情</div></div>
+      <div class="avatar-card" onclick="navigate('shanxing-regions')"><div class="avt a2">鄂</div><div class="avt-name">湖北新联会新善小队</div><div class="avt-sub">12,800人次 · 查看详情</div></div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 达人心愿 -->
+  <div class="section">
+    <div class="section-label" style="cursor:pointer" onclick="navigate('daren-wish-list')">达人心愿</div>
+    <div class="avatar-scroll">
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#ffb6b9,#fae3d9)">黄</div><div class="avt-name">黄晓明</div><div class="avt-sub">一起捐电脑</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#f6d365,#fda085)">幂</div><div class="avt-name">杨幂</div><div class="avt-sub">一起换电路</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#a8edea,#fed6e3)">颖</div><div class="avt-name">赵丽颖</div><div class="avt-sub">一起送玩偶</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#84fab0,#8fd3f4)">战</div><div class="avt-name">肖战</div><div class="avt-sub">一起建校园</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#cfd9df,#e2ebf0)">博</div><div class="avt-name">王一博</div><div class="avt-sub">一起送健康</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#fddb92,#d1fdff)">坤</div><div class="avt-name">蔡徐坤</div><div class="avt-sub">一起建操场</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#fab1a0,#ff7675)">玺</div><div class="avt-name">易烊千玺</div><div class="avt-sub">一起换路灯</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#a1c4fd,#c2e9fb)">兴</div><div class="avt-name">张艺兴</div><div class="avt-sub">一起净饮水</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#ffeaa7,#fab1a0)">洋</div><div class="avt-name">杨洋</div><div class="avt-sub">一起捐手环</div></div>
+      <div class="avatar-card" onclick="navigate('daren-wish-list')"><div class="avt" style="background:linear-gradient(135deg,#ffd1ff,#fad0c4)">春</div><div class="avt-name">李宇春</div><div class="avt-sub">一起建书屋</div></div>
+    </div>
+    <div class="topic-btn" style="margin-top:12px" onclick="navigate('daren-wish-list')">查看全部达人心愿</div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- 好事社区 -->
+  <div class="section">
+    <div class="section-label" style="cursor:pointer" onclick="navigate('community')">好事社区 · 一起做好事</div>
+    <div class="topic-tags">
+      <span class="topic-tag" onclick="createPostFromCommunity('#一起敬老')">#一起敬老</span><span class="topic-tag" onclick="createPostFromCommunity('#一起捡垃圾')">#一起捡垃圾</span><span class="topic-tag" onclick="createPostFromCommunity('#一起助学')">#一起助学</span><span class="topic-tag" onclick="createPostFromCommunity('#一起捐步')">#一起捐步</span><span class="topic-tag" onclick="createPostFromCommunity('#公益探访')">#公益探访</span><span class="topic-tag" onclick="createPostFromCommunity('#小红花打卡')">#小红花打卡</span>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(288)"/><circle cx="0" cy="0" r="3" fill="#e6303a"/></g></svg></div>
+      <div class="post-body"><div class="post-user">新阶层小陈</div><div class="post-text">今天在专场完成了第30次好事打卡，小红花到手啦！一起做好事，戴上小红花~ #小红花打卡</div><div class="post-meta">2小时前 · 128赞 · 36评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><svg width="20" height="20" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#fff"/></svg></div>
+      <div class="post-body"><div class="post-user">好事战队·在行动</div><div class="post-text">我们战队今天探访了乡村敬老院，看望了30多位老人。用镜头记录真实的公益故事，让更多人看到善行的力量。 #一起敬老</div><div class="post-meta">5小时前 · 89赞 · 22评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar" style="background:linear-gradient(135deg,#4caf50,#66bb6a)"><svg width="20" height="20" viewBox="0 0 36 36"><path d="M10,18 L16,24 L26,12" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="post-body"><div class="post-user">环保达人阿绿</div><div class="post-text">周末和小队一起去了朝阳公园捡垃圾，2小时清理了3大袋可回收物！用脚步丈量善行，一起守护绿水青山~ #一起捡垃圾</div><div class="post-meta">昨天 · 215赞 · 48评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar" style="background:linear-gradient(135deg,#9c27b0,#ba68c8)"><svg width="20" height="20" viewBox="0 0 36 36"><circle cx="18" cy="14" r="7" fill="#fff"/><path d="M6,30 C6,24 11,20 18,20 C25,20 30,24 30,30 Z" fill="#fff"/></svg></div>
+      <div class="post-body"><div class="post-user">助学小张</div><div class="post-text">今天给山区孩子们送去了100本课外书，看到他们眼睛里闪着光。读书改变命运，每一本书都是一束光。 #一起助学</div><div class="post-meta">昨天 · 156赞 · 31评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar" style="background:linear-gradient(135deg,#ff9800,#ffb74d)"><svg width="20" height="20" viewBox="0 0 36 36"><path d="M18,6 L22,14 L30,15 L24,21 L26,29 L18,25 L10,29 L12,21 L6,15 L14,14 Z" fill="#fff"/></svg></div>
+      <div class="post-body"><div class="post-user">新善中国志愿者</div><div class="post-text">今天捐步累计达到10万步啦！换算成公益金已经为留守儿童送去了100份营养午餐。走路也能做公益，太有意义了！ #一起捐步</div><div class="post-meta">2天前 · 342赞 · 67评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar" style="background:linear-gradient(135deg,#2196f3,#64b5f6)"><svg width="20" height="20" viewBox="0 0 36 36"><rect x="10" y="8" width="16" height="20" rx="2" fill="#fff"/><rect x="13" y="12" width="10" height="2" fill="#2196f3"/><rect x="13" y="16" width="10" height="2" fill="#2196f3"/><rect x="13" y="20" width="6" height="2" fill="#2196f3"/></svg></div>
+      <div class="post-body"><div class="post-user">公益小记者</div><div class="post-text">采访了"新善中国"项目负责人，深入了解了今年99公益日的亮点。今年有超百万新阶层人士参与，一起为善行中国助力！ #公益探访</div><div class="post-meta">2天前 · 78赞 · 19评论</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 达人战队详情 ==================== -->
+<div id="page-daren-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('daren-list')">&#8592;</div>
+    <span class="header-title">大V战队</span>
+  </div>
+  <div class="profile-hero">
+    <div class="profile-avatar" id="daren-avatar">李</div>
+    <div class="profile-name" id="daren-name">李明</div>
+    <div class="profile-title">好事合伙人 · 北京</div>
+    <div class="profile-stats">
+      <div class="stat-item"><div class="stat-num">12.8万</div><div class="stat-label">粉丝</div></div>
+    </div>
+    <div class="profile-bio">知名公益博主，长期关注乡村教育议题。本次作为「新善中国」好事合伙人，带领战队深入探访公益项目一线，用镜头记录真实善行故事，传递公益正能量。</div>
+  </div>
+  <div class="divider"></div>
+    <div class="section-pad">
+    <div class="section-label">公益探访作品</div>
+    <div class="video-list">
+      <div class="video-card" onclick="showVideoModal('走进大凉山：乡村敬老关爱行动纪实')"><div class="video-cover"><svg width="24" height="24" viewBox="0 0 24 24"><polygon points="9,5 19,12 9,19" fill="#fff"/></svg></div><div class="video-info"><div class="video-title">走进大凉山：乡村敬老关爱行动纪实</div></div></div>
+      <div class="video-card" onclick="showVideoModal('每一份善意都值得被看见')"><div class="video-cover"><svg width="24" height="24" viewBox="0 0 24 24"><polygon points="9,5 19,12 9,19" fill="#fff"/></svg></div><div class="video-info"><div class="video-title">每一份善意都值得被看见</div></div></div>
+      <div class="video-card" onclick="showVideoModal('困境儿童助学计划探访日记')"><div class="video-cover"><svg width="24" height="24" viewBox="0 0 24 24"><polygon points="9,5 19,12 9,19" fill="#fff"/></svg></div><div class="video-info"><div class="video-title">困境儿童助学计划探访日记</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 新善小队详情 ==================== -->
+<div id="page-xiaodui-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('xiaodui-list')">&#8592;</div>
+    <span class="header-title">新善小队</span>
+  </div>
+  <div class="squad-hero">
+    <div class="squad-badge">京</div>
+    <div class="squad-name">北京新善小队</div>
+    <div class="squad-area">地区：北京市</div>
+    <div class="squad-stats">
+      <div class="stat-item"><div class="stat-num">42</div><div class="stat-label">队员</div></div>
+      <div class="stat-item"><div class="stat-num">1,280</div><div class="stat-label">善行次数</div></div>
+      <div class="stat-item"><div class="stat-num">12.5万</div><div class="stat-label">筹款额</div></div>
+    </div>
+    <div class="squad-slogan">口号：京善京美，益路同行！汇聚北京新的社会阶层人士力量，用善行温暖这座城市。</div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-pad">
+    <div class="section-label">队员列表（42人）</div>
+    <div class="member-list">
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#c40d23,#e6303a)">张</div><div class="minfo"><div class="mname">张明</div><div class="mstat">队长</div></div><div class="mscore">156次</div></div>
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#e6303a,#f55547)">李</div><div class="minfo"><div class="mname">李华</div><div class="mstat">副队长</div></div><div class="mscore">142次</div></div>
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#f55547,#ff7a5c)">王</div><div class="minfo"><div class="mname">王芳</div><div class="mstat">队员</div></div><div class="mscore">128次</div></div>
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#ff7a5c,#ffab91)">陈</div><div class="minfo"><div class="mname">陈洋</div><div class="mstat">队员</div></div><div class="mscore">115次</div></div>
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#e6303a,#c40d23)">刘</div><div class="minfo"><div class="mname">刘思</div><div class="mstat">队员</div></div><div class="mscore">98次</div></div>
+      <div class="member-row"><div class="mavt" style="background:linear-gradient(135deg,#c40d23,#e6303a)">赵</div><div class="minfo"><div class="mname">赵婷</div><div class="mstat">队员</div></div><div class="mscore">87次</div></div>
+    </div>
+  </div>
+  <div class="section-pad"><div class="action-btn" onclick="navigate('main')">返回专题页</div></div>
+</div>
+</div>
+
+<!-- ==================== 小红花打卡 ==================== -->
+<div id="page-xiaohonghua" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('xiaohonghua-list')">&#8592;</div>
+    <span class="header-title">小红花打卡</span>
+  </div>
+  <div class="flower-hero">
+    <div class="flower-count">36</div>
+    <div class="flower-label">累计获得小红花</div>
+    <div class="flower-display">
+      <div class="flower-item earned"><svg width="32" height="32" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(288)"/><circle cx="0" cy="0" r="4" fill="#fff"/></g></svg></div>
+      <div class="flower-item earned"><svg width="32" height="32" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(288)"/><circle cx="0" cy="0" r="4" fill="#fff"/></g></svg></div>
+      <div class="flower-item earned"><svg width="32" height="32" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#e6303a" transform="rotate(288)"/><circle cx="0" cy="0" r="4" fill="#fff"/></g></svg></div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-box"><div class="snum">30</div><div class="slabel">打卡天数</div></div>
+      <div class="stat-box"><div class="snum">128</div><div class="slabel">善行次数</div></div>
+      <div class="stat-box"><div class="snum">8</div><div class="slabel">勋章</div></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-pad">
+    <div class="section-label">今日打卡</div>
+    <div class="checkin-actions">
+      <div class="checkin-action"><div class="atitle">微信捐步</div><div class="adesc">今日步数可捐出</div></div>
+      <div class="checkin-action"><div class="atitle">好事记录</div><div class="adesc">记录一件好事</div></div>
+      <div class="checkin-action"><div class="atitle">捐赠书籍</div><div class="adesc">捐出一本书籍</div></div>
+      <div class="checkin-action"><div class="atitle">视频号互动</div><div class="adesc">点赞/转发公益视频</div></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-pad">
+    <div class="section-label">打卡记录</div>
+    <div class="checkin-list">
+      <div class="checkin-row"><div class="cicon" style="background:#fff0ed"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(288)"/></g></svg></div><div class="cbody"><div class="ctitle">微信运动捐步</div><div class="cdate">8月3日 08:32</div></div><div class="creward">+1朵</div></div>
+      <div class="checkin-row"><div class="cicon" style="background:#fff0ed"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(288)"/></g></svg></div><div class="cbody"><div class="ctitle">社区志愿服务</div><div class="cdate">8月2日 15:20</div></div><div class="creward">+1朵</div></div>
+      <div class="checkin-row"><div class="cicon" style="background:#fff0ed"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(288)"/></g></svg></div><div class="cbody"><div class="ctitle">转发公益视频</div><div class="cdate">8月2日 10:15</div></div><div class="creward">+1朵</div></div>
+      <div class="checkin-row"><div class="cicon" style="background:#fff0ed"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(72)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(144)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(216)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#e6303a" transform="rotate(288)"/></g></svg></div><div class="cbody"><div class="ctitle">捐赠公益项目</div><div class="cdate">8月1日 18:45</div></div><div class="creward">+1朵</div></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-pad">
+    <div class="section-label">我的勋章</div>
+    <div class="badge-grid">
+      <div class="badge-item got"><div class="badge-icon" style="background:linear-gradient(135deg,#c40d23,#e6303a)"><span style="font-size:20px;color:#fff">&#9733;</span></div><div class="badge-name">初来乍到</div><div class="badge-desc">首次打卡</div></div>
+      <div class="badge-item got"><div class="badge-icon" style="background:linear-gradient(135deg,#e6303a,#f55547)"><span style="font-size:20px;color:#fff">&#9829;</span></div><div class="badge-name">善行达人</div><div class="badge-desc">打卡30天</div></div>
+      <div class="badge-item got"><div class="badge-icon" style="background:linear-gradient(135deg,#f55547,#ff7a5c)"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#fff"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-7" rx="4" ry="6" fill="#fff" transform="rotate(288)"/></g></svg></div><div class="badge-name">花满枝头</div><div class="badge-desc">累计30朵</div></div>
+      <div class="badge-item locked"><div class="badge-icon" style="background:#ddd"><span style="font-size:20px;color:#999">&#9733;</span></div><div class="badge-name">善行百次</div><div class="badge-desc">100次善行</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 公益项目详情 ==================== -->
+<div id="page-project-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('xinshan-together')">&#8592;</div>
+    <span class="header-title">项目详情</span>
+  </div>
+  <div class="project-cover-big">
+    <svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="30" r="14" fill="#e6303a" opacity="0.5"/><path d="M20,66 C20,56 28,48 40,48 C52,48 60,56 60,66 L60,70 L20,70 Z" fill="#e6303a" opacity="0.5"/></svg>
+  </div>
+  <div class="section-pad">
+    <div class="project-title">乡村敬老关爱行动</div>
+    <div class="project-tags"><span class="project-tag tag-elderly">敬老</span><span class="project-tag tag-rural">乡村振兴</span></div>
+    <div class="progress-box">
+      <div class="progress-header"><span class="progress-label">筹款进度</span><span class="progress-value">72%</span></div>
+      <div class="progress-bar"><div class="fill" style="width:72%"></div></div>
+      <div class="progress-numbers"><span>36万元</span><span>目标 50万元</span></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-item"><div class="ilabel">发起方</div><div class="ivalue">四川新联会</div></div>
+      <div class="info-item"><div class="ilabel">执行地区</div><div class="ivalue">四川省凉山州</div></div>
+      <div class="info-item"><div class="ilabel">受益人群</div><div class="ivalue">留守老人 500+</div></div>
+      <div class="info-item"><div class="ilabel">项目状态</div><div class="ivalue" style="color:#c40d23">募捐中</div></div>
+    </div>
+    <div class="section-label">项目介绍</div>
+    <div class="desc-text">本项目旨在为四川省凉山彝族自治州偏远山区的留守老人提供生活照料、健康关怀和精神慰藉服务。项目将组织志愿者定期探访，为老人提供基础健康检查、生活物资配送和陪伴服务，并建设村级养老互助站点，让山区老人老有所养、老有所乐。</div>
+    <div class="section-label" style="margin-top:14px">资金公示</div>
+    <div class="desc-text">截至目前，本项目已收到善款 36万元，已拨付执行资金 12万元用于首批物资采购和站点建设，剩余资金将按照项目执行计划分期拨付。所有资金使用明细将在项目台账中公示。</div>
+    <div class="action-btn" onclick="showProjectModal('乡村敬老关爱行动')">支持此项目</div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 数据看板 ==================== -->
+<div id="page-data" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">数据看板</span>
+  </div>
+  <div class="section-pad">
+    <div class="section-label">核心数据</div>
+    <div class="stats-overview">
+      <div class="stat-card"><div class="snum">128,560</div><div class="slabel">参与专题页人数</div></div>
+      <div class="stat-card"><div class="snum">3,826</div><div class="slabel">话题数量</div></div>
+      <div class="stat-card"><div class="snum">560万</div><div class="slabel">筹款金额</div></div>
+      <div class="stat-card"><div class="snum">30</div><div class="slabel">覆盖省市</div></div>
+      <div class="stat-card"><div class="snum">30</div><div class="slabel">小队数量</div></div>
+    </div>
+  </div>
+  <div class="divider"></div>
+  <div class="section-pad">
+    <div class="section-label">排行榜</div>
+    <div class="rank-tabs">
+      <div class="rank-tab active" onclick="switchDataTab('region', this)">地区榜</div><div class="rank-tab" onclick="switchDataTab('topic', this)">话题榜</div>
+    </div>
+    <div class="rank-list" id="data-rank-region">
+      <!-- JS动态填充：30省级小队（排名数字渐变） -->
+    </div>
+    <div class="rank-list" id="data-rank-topic" style="display:none">
+      <!-- JS动态填充：30条话题（排名数字渐变） -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 好事社区帖子详情 ==================== -->
+<div id="page-post-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('community')">&#8592;</div>
+    <span class="header-title">帖子详情</span>
+  </div>
+  <div class="section-pad">
+    <div class="post-header">
+      <div class="post-avt"><svg width="18" height="18" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(288)"/><circle cx="0" cy="0" r="3" fill="#e6303a"/></g></svg></div>
+      <div><div class="post-user-detail">好事战队·在行动</div><div class="post-time">5小时前</div></div>
+    </div>
+    <div class="post-content">我们战队今天探访了乡村敬老院，看望了30多位老人。用镜头记录真实的公益故事，让更多人看到善行的力量。每一位老人脸上洋溢的笑容，都是我们坚持做公益的最大动力。感谢「新善中国」提供的平台，让好事被看见，让善意传递得更远。</div>
+    <div class="post-tags-detail"><span class="post-tag-detail" onclick="createPostWithTopic('#一起敬老')">#一起敬老</span></div>
+    <div class="post-actions">
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M12,21 C12,21 3,15 3,9 C3,5.5 5.5,3 8.5,3 C10.4,3 12,4.5 12,4.5 C12,4.5 13.6,3 15.5,3 C18.5,3 21,5.5 21,9 C21,15 12,21 12,21 Z" fill="none" stroke="#b8836e" stroke-width="1.6"/></svg> <span>89</span></div>
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M4,4 L20,4 L20,16 L13,16 L8,20 L8,16 L4,16 Z" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="#b8836e"/><circle cx="15" cy="10" r="1" fill="#b8836e"/></svg> <span>22</span></div>
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M4,12 L18,12 M12,5 L20,12 L12,19" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6,8 L6,16 M9,8 L9,16" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linecap="round"/></svg> <span>36</span></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:#2c1810;margin-bottom:10px">评论 (22)</div>
+    <div class="comment-list">
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#c40d23,#e6303a)">张</div><div class="comment-body"><div class="comment-user">张明</div><div class="comment-text">太感动了！每一份善意都值得被看见，加油！</div><div class="comment-meta">3小时前 · 12赞</div></div></div>
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#e6303a,#f55547)">李</div><div class="comment-body"><div class="comment-user">李华</div><div class="comment-text">我们小队下周也计划去社区做志愿服务，一起做好事！</div><div class="comment-meta">2小时前 · 8赞</div></div></div>
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#f55547,#ff7a5c)">王</div><div class="comment-body"><div class="comment-user">王芳</div><div class="comment-text">看到老人们的笑容，这就是公益最大的意义。</div><div class="comment-meta">1小时前 · 5赞</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 好事社区帖子列表 ==================== -->
+<div id="page-community" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">好事社区</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">一起做好事</span>
+  </div>
+  <div class="topic-tags" style="padding:12px 18px 0">
+    <span class="topic-tag" onclick="createPostFromCommunity('#一起敬老')">#一起敬老</span><span class="topic-tag" onclick="createPostFromCommunity('#一起捡垃圾')">#一起捡垃圾</span><span class="topic-tag" onclick="createPostFromCommunity('#一起助学')">#一起助学</span><span class="topic-tag" onclick="createPostFromCommunity('#一起捐步')">#一起捐步</span><span class="topic-tag" onclick="createPostFromCommunity('#公益探访')">#公益探访</span><span class="topic-tag" onclick="createPostFromCommunity('#小红花打卡')">#小红花打卡</span>
+  </div>
+  <div class="post-feed">
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><svg width="20" height="20" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(288)"/><circle cx="0" cy="0" r="3" fill="#e6303a"/></g></svg></div>
+      <div class="post-body"><div class="post-user">新阶层小陈</div><div class="post-text">今天在专场完成了第30次好事打卡，小红花到手啦！一起做好事，戴上小红花~ #小红花打卡</div><div class="post-meta">2小时前 · 128赞 · 36评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><svg width="20" height="20" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#fff"/></svg></div>
+      <div class="post-body"><div class="post-user">好事战队·在行动</div><div class="post-text">我们战队今天探访了乡村敬老院，看望了30多位老人。用镜头记录真实的公益故事，让更多人看到善行的力量。 #一起敬老</div><div class="post-meta">5小时前 · 89赞 · 22评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><div class="post-avt" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f55547,#ff7a5c);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(288)"/></g></svg></div></div>
+      <div class="post-body"><div class="post-user">公益先锋·刘思</div><div class="post-text">参加了好事合伙人探访活动，亲眼见证了乡村助学项目的执行现场。孩子们拿到新书时的眼神，值得被更多人看见。 #公益探访</div><div class="post-meta">昨天 18:32 · 67赞 · 15评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><div class="post-avt" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#e6303a,#c40d23);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#fff"/></svg></div></div>
+      <div class="post-body"><div class="post-user">四川新联会</div><div class="post-text">本周我们组织志愿者前往凉山州，为山区老人送去生活物资和健康检查。感谢每一位参与的好心人！ #一起敬老</div><div class="post-meta">3天前 · 156赞 · 42评论</div></div>
+    </div>
+    <div class="topic-post" onclick="navigate('post-detail')">
+      <div class="post-avatar"><div class="post-avt" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#ff7a5c,#ffab91);display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(288)"/></g></svg></div></div>
+      <div class="post-body"><div class="post-user">小张同学</div><div class="post-text">连续打卡第15天！每天捐步+转发公益视频，小红花已经攒了20朵了。坚持下去~ #小红花打卡</div><div class="post-meta">4天前 · 45赞 · 10评论</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 发帖编辑页 ==================== -->
+<div id="page-post-create" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('community')">&#8592;</div>
+    <span class="header-title">参与发帖</span>
+    <span class="create-publish-btn" style="margin-left:auto;cursor:pointer" onclick="publishPost()">发布</span>
+  </div>
+  <div class="create-editor">
+    <textarea class="create-textarea" id="createContent" placeholder="分享你的好事故事..." maxlength="500" oninput="updateCharCount()"></textarea>
+    <div class="create-toolbar">
+      <span class="char-count"><span id="charCount">0</span>/500</span>
+    </div>
+    <div class="create-tags" id="tagContainer">
+      <span class="create-tag selected" onclick="toggleTag(this)">#新善中国</span>
+      <span class="create-tag selected" onclick="toggleTag(this)">#久久公益节</span>
+      <span class="create-tag" onclick="toggleTag(this)">#小红花打卡</span>
+      <span class="create-tag" onclick="toggleTag(this)">#好事记录</span>
+      <span class="create-tag" onclick="toggleTag(this)">#一起做好事</span>
+    </div>
+    <div style="font-size:12px;color:#b8836e;margin-top:4px">添加图片</div>
+    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+      <span class="upload-icon">&#128247;</span>
+      <span class="upload-text" style="display:block">点击上传图片</span>
+      <span class="upload-hint" style="display:block">支持 JPG、PNG，最多9张</span>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" multiple style="display:none" onchange="handleImageUpload(event)">
+    <div class="image-preview" id="imagePreview"></div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 达人战队列表 ==================== -->
+<div id="page-daren-list" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">大V战队</span>
+  </div>
+  <div class="section-pad">
+    <div class="section-label">全部达人（共 10 位）</div>
+    <div class="avatar-grid">
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'李明'})"><div class="avt a1">李</div><div class="avt-name">李明</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'王芳'})"><div class="avt a2">王</div><div class="avt-name">王芳</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'陈华'})"><div class="avt a3">陈</div><div class="avt-name">陈华</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'张悦'})"><div class="avt a1">张</div><div class="avt-name">张悦</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'赵磊'})"><div class="avt a2">赵</div><div class="avt-name">赵磊</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'刘思'})"><div class="avt a3">刘</div><div class="avt-name">刘思</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'周婷'})"><div class="avt a1">周</div><div class="avt-name">周婷</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'孙洋'})"><div class="avt a2">孙</div><div class="avt-name">孙洋</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'吴凡'})"><div class="avt a3">吴</div><div class="avt-name">吴凡</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+      <div class="avatar-card" onclick="navigate('daren-detail',{name:'郑凯'})"><div class="avt a1">郑</div><div class="avt-name">郑凯</div><div class="avt-sub">好事合伙人 ·一起做好事</div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 新善中国你我同行（合并新善项目+公益项目） ==================== -->
+<div id="page-xinshan-together" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">新善项目</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">新善项目 · 一起参与</span>
+  </div>
+  <div class="section-pad">
+    <!-- 参与善行 -->
+    <div class="together-section">
+      <div class="ts-label">参与善行</div>
+      <div class="xinshan-list">
+        <div class="xinshan-card" onclick="alert('（Demo演示）跳转至微信捐步专属专题页')">
+          <div class="xc-cover" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9)"><svg width="80" height="80" viewBox="0 0 80 80"><path d="M30,50 L30,25 M50,50 L50,25 M22,50 L58,50" stroke="#4caf50" stroke-width="4" stroke-linecap="round" opacity="0.6"/><circle cx="40" cy="20" r="8" fill="#4caf50" opacity="0.5"/></svg></div>
+          <div class="xc-info"><div class="xc-title">微信捐步</div><div class="xc-desc">捐出每日步数，为公益项目贡献力量。每走一步都是善行，让健康与公益同行。</div><span class="xc-tag">运动公益</span></div>
+        </div>
+        <div class="xinshan-card" onclick="alert('（Demo演示）跳转至捐书专属专题页')">
+          <div class="xc-cover" style="background:linear-gradient(135deg,#e3f2fd,#bbdefb)"><svg width="80" height="80" viewBox="0 0 80 80"><rect x="22" y="20" width="36" height="48" rx="3" fill="#1976d2" opacity="0.4"/><rect x="28" y="28" width="24" height="4" rx="2" fill="#fff" opacity="0.5"/><rect x="28" y="36" width="18" height="4" rx="2" fill="#fff" opacity="0.4"/></svg></div>
+          <div class="xc-info"><div class="xc-title">捐赠书籍</div><div class="xc-desc">为山区孩子捐出一本好书，用知识传递温暖。每本书都可能改变一个孩子的未来。</div><span class="xc-tag">助学公益</span></div>
+        </div>
+        <div class="xinshan-card" onclick="alert('（Demo演示）跳转至志愿服务专属专题页')">
+          <div class="xc-cover" style="background:linear-gradient(135deg,#fff3e0,#ffe0b2)"><svg width="80" height="80" viewBox="0 0 80 80"><circle cx="35" cy="25" r="10" fill="#ff9800" opacity="0.4"/><circle cx="45" cy="25" r="10" fill="#ff9800" opacity="0.4"/><path d="M25,50 C25,42 30,38 40,38 C50,38 55,42 55,50 Z" fill="#ff9800" opacity="0.3"/></svg></div>
+          <div class="xc-info"><div class="xc-title">志愿服务</div><div class="xc-desc">参与社区敬老、环保清洁、公益宣传等志愿服务，用行动温暖身边的每一个人。</div><span class="xc-tag">社区公益</span></div>
+        </div>
+        <div class="xinshan-card" onclick="alert('（Demo演示）跳转至小红花打卡专属专题页')">
+          <div class="xc-cover" style="background:linear-gradient(135deg,#fce4ec,#f8bbd0)"><svg width="80" height="80" viewBox="0 0 80 80"><g transform="translate(40,40)"><ellipse cx="0" cy="-16" rx="8" ry="14" fill="#e6303a" opacity="0.5"/><ellipse cx="0" cy="-16" rx="8" ry="14" fill="#e6303a" opacity="0.5" transform="rotate(72)"/><ellipse cx="0" cy="-16" rx="8" ry="14" fill="#e6303a" opacity="0.5" transform="rotate(144)"/><ellipse cx="0" cy="-16" rx="8" ry="14" fill="#e6303a" opacity="0.5" transform="rotate(216)"/><ellipse cx="0" cy="-16" rx="8" ry="14" fill="#e6303a" opacity="0.5" transform="rotate(288)"/><circle cx="0" cy="0" r="6" fill="#fff" opacity="0.8"/></g></svg></div>
+          <div class="xc-info"><div class="xc-title">小红花打卡</div><div class="xc-desc">每日记录你的善行，集小红花兑换专属勋章。让每一件好事都被看见和记录。</div><span class="xc-tag">善行记录</span></div>
+        </div>
+        <div class="xinshan-card" onclick="alert('（Demo演示）跳转至公益项目专属专题页')">
+          <div class="xc-cover" style="background:linear-gradient(135deg,#f3e5f5,#e1bee7)"><svg width="80" height="80" viewBox="0 0 80 80"><circle cx="40" cy="28" r="12" fill="#9c27b0" opacity="0.4"/><path d="M20,60 C20,50 28,42 40,42 C52,42 60,50 60,60 Z" fill="#9c27b0" opacity="0.3"/></svg></div>
+          <div class="xc-info"><div class="xc-title">公益项目捐赠</div><div class="xc-desc">直接捐赠支持敬老、助学、乡村振兴等优质公益项目，让你的善意精准到达需要帮助的人。</div><span class="xc-tag">捐赠支持</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 公益项目 -->
+    <div class="together-section" style="margin-top:6px">
+      <div class="ts-label">公益项目</div>
+      <div class="filter-tabs">
+        <span class="filter-tab active">全部</span><span class="filter-tab">敬老</span><span class="filter-tab">助幼</span><span class="filter-tab">助学</span><span class="filter-tab">乡村振兴</span>
+      </div>
+      <div class="project-list">
+        <div class="project-card-big" onclick="navigate('project-detail')">
+          <div class="project-cover" style="background:linear-gradient(135deg,#fff5f3,#ffe8e5)"><svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="24" r="10" fill="#e6303a" opacity="0.6"/><path d="M16,48 C16,40 22,34 30,34 C38,34 44,40 44,48 L44,50 L16,50 Z" fill="#e6303a" opacity="0.6"/></svg></div>
+          <div class="project-info-card"><div class="project-name">乡村敬老关爱行动</div><div class="project-tags"><span class="project-tag tag-elderly">敬老</span></div><div class="project-bar"><div class="fill" style="width:72%"></div></div><div class="project-progress"><span>已筹 36万元</span><span>目标 50万元</span></div></div>
+        </div>
+        <div class="project-card-big" onclick="navigate('project-detail')">
+          <div class="project-cover" style="background:linear-gradient(135deg,#f0f5ff,#e8edff)"><svg width="60" height="60" viewBox="0 0 60 60"><rect x="16" y="24" width="28" height="22" rx="3" fill="#4a7fd4" opacity="0.5"/><circle cx="30" cy="16" r="8" fill="#4a7fd4" opacity="0.5"/></svg></div>
+          <div class="project-info-card"><div class="project-name">困境儿童助学计划</div><div class="project-tags"><span class="project-tag tag-education">助学</span></div><div class="project-bar"><div class="fill" style="width:45%"></div></div><div class="project-progress"><span>已筹 22.5万元</span><span>目标 50万元</span></div></div>
+        </div>
+        <div class="project-card-big" onclick="navigate('project-detail')">
+          <div class="project-cover" style="background:linear-gradient(135deg,#f0fff4,#e0ffe8)"><svg width="60" height="60" viewBox="0 0 60 60"><path d="M30,14 C30,14 20,26 20,34 C20,40 24,44 30,44 C36,44 40,40 40,34 C40,26 30,14 30,14 Z" fill="#3a9d5e" opacity="0.5"/></svg></div>
+          <div class="project-info-card"><div class="project-name">乡村振兴助农工程</div><div class="project-tags"><span class="project-tag tag-rural">乡村振兴</span></div><div class="project-bar"><div class="fill" style="width:60%"></div></div><div class="project-progress"><span>已筹 30万元</span><span>目标 50万元</span></div></div>
+        </div>
+        <div class="project-card-big" onclick="navigate('project-detail')">
+          <div class="project-cover" style="background:linear-gradient(135deg,#fff8f0,#ffeedd)"><svg width="60" height="60" viewBox="0 0 60 60"><circle cx="30" cy="20" r="10" fill="#e68a2e" opacity="0.5"/><path d="M14,46 C14,38 20,34 30,34 C40,34 46,38 46,46 Z" fill="#e68a2e" opacity="0.5"/></svg></div>
+          <div class="project-info-card"><div class="project-name">留守儿童陪伴计划</div><div class="project-tags"><span class="project-tag tag-child">助幼</span></div><div class="project-bar"><div class="fill" style="width:33%"></div></div><div class="project-progress"><span>已筹 16.5万元</span><span>目标 50万元</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 善行打卡 - 30省级小队列表 ==================== -->
+<div id="page-shanxing-regions" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">善行打卡</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">各省新善小队（30个）</span>
+  </div>
+  <div class="section-pad">
+    <div class="rank-list" id="province-team-list">
+      <!-- 动态填充 -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 善行打卡 - 小队话题列表 ==================== -->
+<div id="page-shanxing-topics" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('shanxing-regions')">&#8592;</div>
+    <span class="header-title">北京市新联会新善小队</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">小队话题（8个）</span>
+  </div>
+  <div class="section-pad">
+    <div class="topic-dynamic-list">
+      <!-- 动态填充 -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 善行打卡 - 话题帖子流 ==================== -->
+<div id="page-shanxing-posts" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('shanxing-topics')">&#8592;</div>
+    <span class="header-title">一起来做环保吧</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">126条帖子</span>
+  </div>
+  <div class="section-pad">
+    <div class="post-dynamic-list">
+      <!-- 动态填充 -->
+    </div>
+  </div>
+  <div class="floating-post-btn" id="shanxing-post-btn" onclick="shanxingCreatePost()">
+    <svg width="18" height="18" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-9" rx="5" ry="8" fill="#fff" transform="rotate(288)"/></g></svg>
+    参与发帖
+  </div>
+</div>
+</div>
+
+<!-- ==================== 善行打卡 - 帖子详情��独立于好事社区） ==================== -->
+<div id="page-shanxing-post-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" id="sx-post-back-btn" onclick="goBackFromShanxingPost()">&#8592;</div>
+    <span class="header-title">帖子详情</span>
+  </div>
+  <div class="section-pad">
+    <div class="post-header">
+      <div class="post-avt"><svg width="18" height="18" viewBox="0 0 36 36"><g transform="translate(18,18)"><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(72)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(144)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(216)"/><ellipse cx="0" cy="-8" rx="4" ry="7" fill="#fff" transform="rotate(288)"/><circle cx="0" cy="0" r="3" fill="#e6303a"/></g></svg></div>
+      <div><div class="post-user-detail" id="sx-post-user">善行队员</div><div class="post-time" id="sx-post-time">2小时前</div></div>
+    </div>
+    <div class="post-content" id="sx-post-content">今天完成了善行任务，记录这一刻的美好。</div>
+    <div class="post-tags-detail" id="sx-post-tags"><span class="post-tag-detail" onclick="shanxingCreatePost()">#一起来做环保吧</span></div>
+    <div class="post-actions">
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M12,21 C12,21 3,15 3,9 C3,5.5 5.5,3 8.5,3 C10.4,3 12,4.5 12,4.5 C12,4.5 13.6,3 15.5,3 C18.5,3 21,5.5 21,9 C21,15 12,21 12,21 Z" fill="none" stroke="#b8836e" stroke-width="1.6"/></svg> <span>128</span></div>
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M4,4 L20,4 L20,16 L13,16 L8,20 L8,16 L4,16 Z" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linejoin="round"/><circle cx="9" cy="10" r="1" fill="#b8836e"/><circle cx="15" cy="10" r="1" fill="#b8836e"/></svg> <span>36</span></div>
+      <div class="action-item"><svg width="18" height="18" viewBox="0 0 24 24" style="vertical-align:middle"><path d="M4,12 L18,12 M12,5 L20,12 L12,19" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M6,8 L6,16 M9,8 L9,16" fill="none" stroke="#b8836e" stroke-width="1.6" stroke-linecap="round"/></svg> <span>42</span></div>
+    </div>
+    <div style="font-size:13px;font-weight:700;color:#2c1810;margin-bottom:10px">评论 (36)</div>
+    <div class="comment-list" id="sx-comments">
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#3a9d5e,#4caf50)">赵</div><div class="comment-body"><div class="comment-user">赵敏</div><div class="comment-text">一起加油！每天都是善行的开始</div><div class="comment-meta">1小时前 · 18赞</div></div></div>
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#e6303a,#f55547)">钱</div><div class="comment-body"><div class="comment-user">钱磊</div><div class="comment-text">坚持就是胜利，点赞！</div><div class="comment-meta">30分钟前 · 8赞</div></div></div>
+      <div class="comment-row"><div class="comment-avt" style="background:linear-gradient(135deg,#f55547,#ff7a5c)">孙</div><div class="comment-body"><div class="comment-user">孙悦</div><div class="comment-text">向你们学习！</div><div class="comment-meta">10分钟前 · 5赞</div></div></div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- ==================== 达人心愿列表 ==================== -->
+<div id="page-daren-wish-list" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('main')">&#8592;</div>
+    <span class="header-title">达人心愿</span>
+  </div>
+  <div class="community-header">
+    <span class="community-title">明星发起 · 一键助力心愿</span>
+  </div>
+  <div class="section-pad">
+    <div class="wish-list" id="wish-list-container">
+      <!-- JS动态填充 -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 达人心愿详情 ==================== -->
+<div id="page-daren-wish-detail" class="page-container">
+<div class="page">
+  <div class="header">
+    <div class="back-btn" onclick="navigate('daren-wish-list')">&#8592;</div>
+    <span class="header-title">达人心愿</span>
+  </div>
+  <div class="wish-hero" id="wish-hero">
+    <!-- JS动态填充 -->
+  </div>
+  <div class="section-pad">
+    <div class="wish-action-box">
+      <div class="wish-progress-line">
+        当前已筹集 <span id="wish-raised" style="color:#c40d23;font-weight:700">0</span>/<span id="wish-target" style="font-weight:600">0</span> <span id="wish-unit"></span>
+      </div>
+      <div class="wish-progress">
+        <div class="wish-progress-fill" id="wish-progress-fill"></div>
+        <div class="wish-progress-flower">&#127801;</div>
+      </div>
+      <button class="wish-btn" id="wish-help-btn" onclick="onClickWishBtn()">一键助力</button>
+      <div class="wish-tip">该心愿由腾讯基金会出资，你无需支付</div>
+    </div>
+    <div style="font-size:14px;font-weight:700;color:#2c1810;margin:18px 0 12px;display:flex;justify-content:space-between;align-items:center">
+      <span>留言板</span>
+      <span style="font-size:12px;color:#b8836e;font-weight:400">写留言支持TA &#8250;</span>
+    </div>
+    <div class="comment-list" id="wish-comments">
+      <!-- JS动态填充 -->
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== 助力成功弹窗 ==================== -->
+<div class="modal-overlay" id="wish-modal">
+  <div class="modal-popup">
+    <div class="modal-icon" style="background:linear-gradient(135deg,#ffb6b9,#fae3d9)">
+      <svg width="32" height="32" viewBox="0 0 36 36"><circle cx="18" cy="18" r="16" fill="none" stroke="#c40d23" stroke-width="2.5"/><path d="M11,18 L16,23 L25,13" fill="none" stroke="#c40d23" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="modal-title">恭喜你，助力成功</div>
+    <div class="modal-text">感谢你的善意，每一份助力都将转化为温暖</div>
+    <div class="modal-project" id="modal-wish-title">为山区儿童送1000台电脑</div>
+    <div class="modal-btn primary" onclick="closeWishModal()">我知道了</div>
+  </div>
+</div>
+
+<!-- ==================== 项目捐赠弹窗 ==================== -->
+<div class="modal-overlay" id="video-modal">
+  <div class="modal-popup">
+    <div class="modal-icon">
+      <svg width="28" height="28" viewBox="0 0 36 36"><polygon points="14,8 28,18 14,28" fill="#e6303a"/></svg>
+    </div>
+    <div class="modal-title">跳转视频号</div>
+    <div class="modal-text">即将跳转至微信视频号观看</div>
+    <div class="modal-project" id="modal-video-title">走进大凉山</div>
+    <div class="modal-btn primary" onclick="closeVideoModal()">我知道了</div>
+    <div class="modal-btn cancel" onclick="closeVideoModal()">取消</div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="project-modal">
+  <div class="modal-popup">
+    <div class="modal-icon">
+      <svg width="28" height="28" viewBox="0 0 36 36"><path d="M18,30 C18,30 6,22 6,14 C6,9 9,6 12,6 C14.5,6 17,8 18,10 C19,8 21.5,6 24,6 C27,6 30,9 30,14 C30,22 18,30 18,30 Z" fill="#e6303a"/></svg>
+    </div>
+    <div class="modal-title">感谢您的支持</div>
+    <div class="modal-text">即将跳转至</div>
+    <div class="modal-project" id="modal-project-name">乡村敬老关爱行动</div>
+    <div class="modal-btn primary" onclick="closeProjectModal()">我知道了</div>
+    <div class="modal-btn cancel" onclick="closeProjectModal()">取消</div>
+  </div>
+</div>
+
+<script>
+// ===== 全局状态 =====
+var state = {
+  currentRegion: null,   // { id, name, count }
+  currentTeam: null,     // { name, topics }
+  currentTopic: null,    // { name, count }
+  lockedTopic: null      // 发帖页锁定的话题
+};
+
+// ===== 30省级小队数据（按人次降序） =====
+var regionData = [
+  { id: 'beijing',   name: '北京市',         letter: '京', team: '北京市新联会新善小队',     count: 32150 },
+  { id: 'guangdong', name: '广东省',         letter: '粤', team: '广东省新联会新善小队',     count: 28920 },
+  { id: 'zhejiang',  name: '浙江省',         letter: '浙', team: '浙江省新联会新善小队',     count: 21840 },
+  { id: 'shanghai',  name: '上海市',         letter: '沪', team: '上海市新联会新善小队',     count: 18620 },
+  { id: 'hunan',     name: '湖南省',         letter: '湘', team: '湖南省新联会新善小队',     count: 18500 },
+  { id: 'sichuan',   name: '四川省',         letter: '川', team: '四川省新联会新善小队',     count: 15200 },
+  { id: 'jiangsu',   name: '江苏省',         letter: '苏', team: '江苏省新联会新善小队',     count: 14300 },
+  { id: 'hubei',     name: '湖北省',         letter: '鄂', team: '湖北省新联会新善小队',     count: 12800 },
+  { id: 'shandong',  name: '山东省',         letter: '鲁', team: '山东省新联会新善小队',     count: 11800 },
+  { id: 'henan',     name: '河南省',         letter: '豫', team: '河南省新联会新善小队',     count: 10650 },
+  { id: 'fujian',    name: '福建省',         letter: '闽', team: '福建省新联会新善小队',     count:  9800 },
+  { id: 'anhui',     name: '安徽省',         letter: '皖', team: '安徽省新联会新善小队',     count:  9200 },
+  { id: 'shaanxi',   name: '陕西省',         letter: '陕', team: '陕西省新联会新善小队',     count:  8650 },
+  { id: 'jiangxi',   name: '江西省',         letter: '赣', team: '江西省新联会新善小队',     count:  8200 },
+  { id: 'liaoning',  name: '辽宁省',         letter: '辽', team: '辽宁省新联会新善小队',     count:  7650 },
+  { id: 'hebei',     name: '河北省',         letter: '冀', team: '河北省新联会新善小队',     count:  7200 },
+  { id: 'shanxi',    name: '山西省',         letter: '晋', team: '山西省新联会新善小队',     count:  6800 },
+  { id: 'yunnan',    name: '云南省',         letter: '云', team: '云南省新联会新善小队',     count:  6300 },
+  { id: 'guizhou',   name: '贵州省',         letter: '黔', team: '贵州省新联会新善小队',     count:  5950 },
+  { id: 'guangxi',   name: '广西壮族自治区', letter: '桂', team: '广西新联会新善小队',         count:  5500 },
+  { id: 'chongqing', name: '重庆市',         letter: '渝', team: '重庆市新联会新善小队',     count:  5100 },
+  { id: 'tianjin',   name: '天津市',         letter: '津', team: '天津市新联会新善小队',     count:  4800 },
+  { id: 'neimenggu', name: '内蒙古自治区',   letter: '蒙', team: '内蒙古新联会新善小队',     count:  4400 },
+  { id: 'jilin',     name: '吉林省',         letter: '吉', team: '吉林省新联会新善小队',     count:  4000 },
+  { id: 'heilongjiang', name: '黑龙江省',    letter: '黑', team: '黑龙江省新联会新善小队',   count:  3650 },
+  { id: 'hainan',    name: '海南省',         letter: '琼', team: '海南省新联会新善小队',     count:  3200 },
+  { id: 'gansu',     name: '甘肃省',         letter: '甘', team: '甘肃省新联会新善小队',     count:  2800 },
+  { id: 'qinghai',   name: '青海省',         letter: '青', team: '青海省新联会新善小队',     count:  2300 },
+  { id: 'ningxia',   name: '宁夏回族自治区', letter: '宁', team: '宁夏新联会新善小队',         count:  1950 },
+  { id: 'xizang',    name: '西藏自治区',     letter: '藏', team: '西藏新联会新善小队',         count:  1500 }
+];
+
+// 按 id 索引
+var regionDataById = {};
+for (var i = 0; i < regionData.length; i++) {
+  regionDataById[regionData[i].id] = regionData[i];
+}
+
+// ===== 预设话题列表（善行打卡 - 每个小队列表展示） =====
+var presetTopics = [
+  '#一起敬老', '#一起捡垃圾', '#一起助学', '#一起捐书',
+  '#一起捐步', '#环保净山', '#慰问老兵', '#关爱留守儿童'
+];
+
+// ===== 完整话题榜（30条） =====
+var topicData = [
+  { name: '#一起敬老',     count: 826 },
+  { name: '#一起捡垃圾',   count: 712 },
+  { name: '#一起助学',     count: 658 },
+  { name: '#一起捐书',     count: 543 },
+  { name: '#一起捐步',     count: 489 },
+  { name: '#环保净山',     count: 432 },
+  { name: '#慰问老兵',     count: 396 },
+  { name: '#关爱留守儿童', count: 358 },
+  { name: '#山区送温暖',   count: 321 },
+  { name: '#无偿献血',     count: 295 },
+  { name: '#社区防疫志愿', count: 268 },
+  { name: '#爱心厨房',     count: 242 },
+  { name: '#圆梦微心愿',   count: 215 },
+  { name: '#童心共绘',     count: 198 },
+  { name: '#助残圆梦',     count: 176 },
+  { name: '#应急救援',     count: 158 },
+  { name: '#乡村教师支持', count: 142 },
+  { name: '#春运暖冬',     count: 128 },
+  { name: '#救助流浪动物', count: 115 },
+  { name: '#文明交通引导', count: 102 },
+  { name: '#重走长征路',   count:  92 },
+  { name: '#夕阳红关怀',   count:  85 },
+  { name: '#疫情云陪伴',   count:  78 },
+  { name: '#春运爱心驿站', count:  72 },
+  { name: '#黄河生态保护', count:  65 },
+  { name: '#光盘行动',     count:  58 },
+  { name: '#旧物新生',     count:  52 },
+  { name: '#无烟社区',     count:  45 },
+  { name: '#心灵陪伴',     count:  38 },
+  { name: '#网络安全志愿', count:  32 }
+];
+
+// ===== 达人心愿数据（10位明星） =====
+var wishData = [
+  { id: 'w-huangxiaoming', star: '黄晓明', avatar: '黄', bg: 'linear-gradient(135deg,#ffb6b9,#fae3d9)', gender: 'male',
+    project: '关爱山区儿童',
+    title: '为山区儿童送1000台电脑',
+    desc: '让山里的孩子也能用电脑看见更大的世界，为乡村学校募捐1000台学习电脑，点亮他们的数字梦想。',
+    target: 1000, unit: '台', raised: 726 },
+  { id: 'w-yangmi', star: '杨幂', avatar: '幂', bg: 'linear-gradient(135deg,#f6d365,#fda085)', gender: 'female',
+    project: '守护农村老人',
+    title: '为农村留守老人更换100套老旧电路',
+    desc: '安全用电是基本保障，为100户独居老人更换老旧电路，消除火灾隐患，让他们的晚年生活更安心。',
+    target: 100, unit: '套', raised: 68 },
+  { id: 'w-zhaoliying', star: '赵丽颖', avatar: '颖', bg: 'linear-gradient(135deg,#a8edea,#fed6e3)', gender: 'female',
+    project: '关爱留守儿童',
+    title: '为留守儿童送1000个玩偶',
+    desc: '每一个玩偶都是一份陪伴，为山区留守儿童送上手作玩偶，让远方爸爸妈妈的爱也能摸得到。',
+    target: 1000, unit: '个', raised: 826 },
+  { id: 'w-xiaozhan', star: '肖战', avatar: '战', bg: 'linear-gradient(135deg,#84fab0,#8fd3f4)', gender: 'male',
+    project: '智慧校园计划',
+    title: '为乡村学校配备100台智能教学一体机',
+    desc: '一块屏幕连接大山与外面的世界，让乡村孩子也能享有城市的优质教育资源。',
+    target: 100, unit: '台', raised: 78 },
+  { id: 'w-wangyibo', star: '王一博', avatar: '博', bg: 'linear-gradient(135deg,#cfd9df,#e2ebf0)', gender: 'male',
+    project: '健康乡村计划',
+    title: '为乡村医生配备100台智能血压仪',
+    desc: '送医下乡还要送设备下乡，让村医的诊疗水平跟上时代，守护乡亲们的健康。',
+    target: 100, unit: '台', raised: 56 },
+  { id: 'w-caikun', star: '蔡徐坤', avatar: '坤', bg: 'linear-gradient(135deg,#fddb92,#d1fdff)', gender: 'male',
+    project: '阳光操场计划',
+    title: '为山区儿童捐赠1000套体育用品',
+    desc: '奔跑是孩子的天性，给每所村小配备完整的体育器材包，让课间十分钟也能欢声笑语。',
+    target: 1000, unit: '套', raised: 412 },
+  { id: 'w-yiyangqianxi', star: '易烊千玺', avatar: '玺', bg: 'linear-gradient(135deg,#fab1a0,#ff7675)', gender: 'male',
+    project: '点亮回家路',
+    title: '为老旧社区更换100套路灯',
+    desc: '夜路不再黑，晚归人不再怕，让每一个回家的脚步都被光亮守护。',
+    target: 100, unit: '套', raised: 38 },
+  { id: 'w-zhangyixing', star: '张艺兴', avatar: '兴', bg: 'linear-gradient(135deg,#a1c4fd,#c2e9fb)', gender: 'male',
+    project: '清泉润万家',
+    title: '为偏远山区捐赠100套净水设备',
+    desc: '让干净的水从指间流过，从一个家庭传到下一个家庭，这是最基本的尊严。',
+    target: 100, unit: '套', raised: 89 },
+  { id: 'w-yangfan', star: '杨洋', avatar: '洋', bg: 'linear-gradient(135deg,#ffeaa7,#fab1a0)', gender: 'male',
+    project: '银龄守护',
+    title: '为失独老人捐赠1000台智能手环',
+    desc: '一块智能手环连接远方的儿女，心率、跌倒、定位一键守护。技术可以让爱不缺席。',
+    target: 1000, unit: '台', raised: 256 },
+  { id: 'w-liying', star: '李宇春', avatar: '春', bg: 'linear-gradient(135deg,#ffd1ff,#fad0c4)', gender: 'female',
+    project: '梦想小课堂',
+    title: '为乡村学校援建100间图书角',
+    desc: '一间图书角打开一扇窗，让爱读书的孩子不用穿越大山也能周游世界。',
+    target: 100, unit: '间', raised:  63 }
+];
+
+// ===== 页面导航（支持数据传参） =====
+function navigate(pageId, data) {
+  document.querySelectorAll('.page-container').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  var target = document.getElementById('page-' + pageId);
+  if (!target) return;
+
+  // 特殊页面需要在显示前动态填充内容
+  if (pageId === 'shanxing-regions' && (!data || data.id === undefined)) {
+    populateProvinceList();
+  }
+  if (pageId === 'shanxing-topics' && data && data.regionId !== undefined) {
+    populateTopicsPage(data);
+  }
+  if (pageId === 'shanxing-posts' && data) {
+    populatePostsPage(data);
+  }
+  if (pageId === 'post-create' && data && data.lockedTopic) {
+    prepareCreatePage(data.lockedTopic);
+  }
+  if (pageId === 'post-create' && !data) {
+    prepareCreatePage(null);
+  }
+  if (pageId === 'shanxing-post-detail' && data) {
+    populateShanxingPostDetail(data);
+  }
+  if (pageId === 'data' && (!data || data.refresh)) {
+    populateDataRank();
+  }
+  if (pageId === 'daren-wish-detail' && data) {
+    populateWishDetail(data);
+  }
+  if (pageId === 'main') {
+    populateMainRank();
+  }
+  if (pageId === 'daren-wish-list') {
+    populateWishList();
+  }
+  if (pageId === 'daren-detail') {
+    populateDarenDetail(data && data.name);
+  }
+
+  target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ===== 动态填充大V详情（姓名） =====
+function populateDarenDetail(name) {
+  var avatarEl = document.getElementById('daren-avatar');
+  var nameEl = document.getElementById('daren-name');
+  if (!name || !nameEl) return;
+  nameEl.textContent = name;
+  if (avatarEl) avatarEl.textContent = name.charAt(0);
+}
+
+// ===== 动态填充30省级小队列表 =====
+function populateProvinceList() {
+  var list = document.getElementById('province-team-list');
+  if (!list) return;
+  var html = '';
+  for (var i = 0; i < regionData.length; i++) {
+    var r = regionData[i];
+    var rIdx = i + 1;
+    var colorClass = 'r-' + rIdx;
+    html += '<div class="rank-row" onclick=\'navigate("shanxing-topics",{regionId:"' + r.id + '"})\'>' +
+      '<span class="rank-num ' + colorClass + '" style="width:32px;font-size:15px">' + rIdx + '</span>' +
+      '<span style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#c40d23,#e6303a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0">' + r.letter + '</span>' +
+      '<span style="flex:1;font-size:12px;font-weight:500;color:#2c1810;margin-left:10px">' + r.team + '</span>' +
+      '<span style="color:#c9a899;font-size:14px;margin-left:6px">›</span>' +
+      '</div>';
+  }
+  list.innerHTML = html;
+}
+
+// ===== 动态填充主页数据看板（地区榜+话题榜各3条） =====
+function populateMainRank() {
+  var regionList = document.querySelector('#page-main #main-rank-region');
+  if (regionList) {
+    var html = '';
+    for (var i = 0; i < Math.min(3, regionData.length); i++) {
+      var r = regionData[i];
+      var numStr = r.count.toLocaleString();
+      html += '<div class="rank-row"><span class="rank-num r-' + (i+1) + '">' + (i+1) + '</span>' +
+        '<span class="name">' + r.team + '</span>' +
+        '<span class="score">' + numStr + '人次</span></div>';
+    }
+    regionList.innerHTML = html;
+  }
+  var topicList = document.querySelector('#page-main #main-rank-topic');
+  if (topicList && typeof topicData !== 'undefined') {
+    var html = '';
+    for (var i = 0; i < Math.min(3, topicData.length); i++) {
+      var t = topicData[i];
+      html += '<div class="rank-row"><span class="rank-num r-' + (i+1) + '">' + (i+1) + '</span>' +
+        '<span class="name">' + t.name + '</span>' +
+        '<span class="score">' + t.count + '条</span></div>';
+    }
+    topicList.innerHTML = html;
+  }
+}
+
+// ===== 动态填充完整数据看板（30省级小队+话题） =====
+function populateDataRank() {
+  var regionList = document.querySelector('#page-data #data-rank-region');
+  if (regionList) {
+    var html = '<div class="rank-list-compact">';
+    for (var i = 0; i < regionData.length; i++) {
+      var r = regionData[i];
+      var rIdx = i + 1;
+      var numStr = r.count.toLocaleString();
+      html += '<div class="rank-row">' +
+        '<span class="rank-num r-' + rIdx + '">' + rIdx + '</span>' +
+        '<span style="flex:1;font-size:12px;font-weight:500;color:#2c1810">' + r.team + '</span>' +
+        '<span style="font-size:12px;color:#c40d23;font-weight:600">' + numStr + ' 人次</span>' +
+        '</div>';
+    }
+    html += '</div>';
+    regionList.innerHTML = html;
+  }
+  var topicList = document.querySelector('#page-data #data-rank-topic');
+  if (topicList && typeof topicData !== 'undefined') {
+    var html = '<div class="rank-list-compact">';
+    var n = topicData.length;
+    for (var i = 0; i < n; i++) {
+      var t = topicData[i];
+      var rIdx = i + 1;
+      html += '<div class="rank-row">' +
+        '<span class="rank-num r-' + rIdx + '">' + rIdx + '</span>' +
+        '<span style="flex:1;font-size:12px;font-weight:500;color:#2c1810">' + t.name + '</span>' +
+        '<span style="font-size:12px;color:#c40d23;font-weight:600">' + t.count + ' 条</span>' +
+        '</div>';
+    }
+    html += '</div>';
+    topicList.innerHTML = html;
+  }
+}
+
+// ===== 动态填充话题页面（按地区小队） =====
+function populateTopicsPage(info) {
+  var region = regionDataById[info.regionId];
+  if (!region) return;
+  state.currentRegion = { id: region.id, name: region.name, count: region.count };
+  state.currentTeam = { name: region.team, regionId: region.id };
+
+  var title = document.querySelector('#page-shanxing-topics .header-title');
+  if (title) title.textContent = region.team;
+  var subtitle = document.querySelector('#page-shanxing-topics .community-title');
+  if (subtitle) subtitle.textContent = '小队话题（' + presetTopics.length + '个）';
+
+  var list = document.querySelector('#page-shanxing-topics .topic-dynamic-list');
+  if (!list) return;
+
+  // 根据省份 id 计算偏移，让每个小队的话题顺序略有差异
+  var offset = 0;
+  for (var i = 0; i < regionData.length; i++) {
+    if (regionData[i].id === region.id) { offset = i; break; }
+  }
+  var counts = [186, 142, 128, 96, 84, 68, 52, 41];
+  var html = '';
+  for (var i = 0; i < presetTopics.length; i++) {
+    var topicName = presetTopics[(offset + i) % presetTopics.length];
+    var countVal = counts[i % counts.length];
+    if (offset > 0) countVal = Math.max(8, countVal - offset * 5);
+    html += '<div class="topic-card-big" onclick="navigate(\'shanxing-posts\',{topicName:\'' +
+      escapeHTML(topicName) + '\',topicCount:' + countVal + '})">' +
+      '<div class="tc-icon"><svg width="24" height="24" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="3" fill="none" stroke="#c40d23" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="#c40d23" stroke-width="1.5"/></svg></div>' +
+      '<div class="tc-body"><div class="tc-name">' + topicName + '</div><div class="tc-count">' + countVal + '条帖子 · 成员活跃中</div></div>' +
+      '<div class="tc-arrow">›</div></div>';
+  }
+  list.innerHTML = html;
+}
+
+// ===== 动态填充帖子流页面 =====
+function populatePostsPage(info) {
+  state.currentTopic = { name: info.topicName, count: info.topicCount };
+
+  var title = document.querySelector('#page-shanxing-posts .header-title');
+  if (title) title.textContent = info.topicName;
+  var subtitle = document.querySelector('#page-shanxing-posts .community-title');
+  if (subtitle) subtitle.textContent = info.topicCount + '条帖子';
+
+  // 生成动态帖子数据
+  var users = ['张明', '李华', '王芳', '陈洋', '周婷'];
+  var times = ['2小时前', '5小时前', '昨天', '3天前', '1周前'];
+  var covers = ['#fff5f3,#ffe8e5', '#e8f5e9,#c8e6c9', '#e3f2fd,#bbdefb', '#fff3e0,#ffe0b2', '#fce4ec,#f8bbd0'];
+  var list = document.querySelector('#page-shanxing-posts .post-dynamic-list');
+  if (!list) return;
+  var n = Math.min(info.topicCount, 5);
+  if (n > 5) n = 5;
+  var topicEsc = escapeHTML(info.topicName);
+  var html = '';
+  for (var i = 0; i < n; i++) {
+    html += '<div class="post-card-big" onclick="navigate(\'shanxing-post-detail\',{postIdx:' + i + '})">' +
+      '<div class="post-cover-big-img" style="background:linear-gradient(135deg,' + covers[i] + ')">' +
+      '<svg width="50" height="50" viewBox="0 0 50 50"><circle cx="25" cy="20" r="10" fill="#e6303a" opacity="0.3"/>' +
+      '<path d="M12,42 C12,35 18,30 25,30 C32,30 38,35 38,42 Z" fill="#e6303a" opacity="0.25"/></svg></div>' +
+      '<div class="pcb-info"><div class="pcb-text">' + times[i] + '的善行记录：今天完成了' + info.topicName.replace('#','') + '的活动...</div>' +
+      '<div class="pcb-user">' + users[i] + ' · ' + times[i] + '</div></div></div>';
+  }
+  list.innerHTML = html;
+}
+
+// ===== 动态填充善行打卡帖子详情 =====
+function populateShanxingPostDetail(info) {
+  var topic = state.currentTopic;
+  var topicName = topic ? topic.name : '#善行打卡';
+  var users = ['张明', '李华', '王芳', '陈洋', '周婷'];
+  var times = ['2小时前', '5小时前', '昨天', '3天前', '1周前'];
+  var contents = [
+    '今天和队友们一起完成了' + topicName.replace('#','') + '的活动，感觉非常有意义！环境保护需要每个人从身边小事做起，希望更多人加入我们。',
+    '坚持' + topicName.replace('#','') + '已经一个月了！从最初的几个人到现在几十人的团队，善行的力量在持续壮大。',
+    '每次完成善行任务都感觉特别充实，记录这一刻的美好。感谢小队每一位成员的付出，你们是最棒的！',
+    '今天带着孩子一起参加了公益活动，从小培养善心很重要。孩子的笑容让我觉得一切都值得。',
+    '一周的志愿服务结束了，虽然累但很开心。看到社区变得更美好，所有的汗水都是甜的。'
+  ];
+  var idx = (info && info.postIdx !== undefined) ? info.postIdx : 0;
+  idx = idx % users.length;
+
+  // 更新内容
+  var elUser = document.getElementById('sx-post-user');
+  var elTime = document.getElementById('sx-post-time');
+  var elContent = document.getElementById('sx-post-content');
+  var elTags = document.getElementById('sx-post-tags');
+
+  if (elUser) elUser.textContent = users[idx];
+  if (elTime) elTime.textContent = times[idx];
+  if (elContent) elContent.textContent = contents[idx];
+  if (elTags) {
+    elTags.innerHTML = '<span class="post-tag-detail" onclick="shanxingCreatePost()">' + topicName + '</span>';
+  }
+}
+
+// ===== 善行打卡帖子详情返回 =====
+function goBackFromShanxingPost() {
+  var topic = state.currentTopic;
+  if (topic) {
+    navigate('shanxing-posts', { topicName: topic.name, topicCount: topic.count });
+  } else {
+    navigate('shanxing-posts', { topicName: '#一起来做环保吧', topicCount: 30 });
+  }
+}
+
+// ===== 准备发帖页 =====
+function prepareCreatePage(lockedTopic) {
+  state.lockedTopic = lockedTopic;
+  var tagContainer = document.getElementById('tagContainer');
+  if (!tagContainer) return;
+
+  if (lockedTopic) {
+    // 锁定话题模式
+    tagContainer.innerHTML = '<span class="create-tag selected locked-tag">' + lockedTopic + '</span>';
+    tagContainer.setAttribute('data-locked', 'true');
+    // 根据来源设置返回按钮
+    var backTarget = state.createBackTo || 'shanxing-posts';
+    var backBtn = document.querySelector('#page-post-create .back-btn');
+    if (backBtn) {
+      if (backTarget === 'post-detail') {
+        backBtn.setAttribute('onclick', "navigate('post-detail')");
+      } else if (backTarget === 'community') {
+        backBtn.setAttribute('onclick', "navigate('community')");
+      } else {
+        var topicName = state.currentTopic ? state.currentTopic.name : '#一起来做环保吧';
+        var topicCount = state.currentTopic ? state.currentTopic.count : 30;
+        backBtn.setAttribute('onclick', "navigate('shanxing-posts',{topicName:'" +
+          escapeHTML(topicName) + "',topicCount:" + topicCount + "})");
+      }
+    }
+    // 重置
+    state.createBackTo = null;
+  } else {
+    // 自由模式
+    tagContainer.innerHTML = '<span class="create-tag selected" onclick="toggleTag(this)">#新善中国</span>' +
+      '<span class="create-tag selected" onclick="toggleTag(this)">#久久公益节</span>' +
+      '<span class="create-tag" onclick="toggleTag(this)">#小红花打卡</span>' +
+      '<span class="create-tag" onclick="toggleTag(this)">#好事记录</span>' +
+      '<span class="create-tag" onclick="toggleTag(this)">#一起做好事</span>';
+    tagContainer.setAttribute('data-locked', 'false');
+    var backBtn2 = document.querySelector('#page-post-create .back-btn');
+    if (backBtn2) {
+      backBtn2.setAttribute('onclick', "navigate('community')");
+    }
+  }
+  // 清空输入
+  document.getElementById('createContent').value = '';
+  document.getElementById('imagePreview').innerHTML = '';
+  document.getElementById('charCount').textContent = '0';
+}
+
+// ===== 从帖子详情跳转发帖（锁定话题） =====
+function createPostWithTopic(topic) {
+  state.createBackTo = 'post-detail';
+  navigate('post-create', { lockedTopic: topic });
+}
+
+// ===== 从好事社区点击话题跳转发帖（锁定话题） =====
+function createPostFromCommunity(topic) {
+  state.createBackTo = 'community';
+  navigate('post-create', { lockedTopic: topic });
+}
+
+// ===== 从善行打卡帖子流跳转发帖 =====
+function shanxingCreatePost() {
+  state.createBackTo = 'shanxing-posts';
+  var topic = state.currentTopic ? state.currentTopic.name : '#一起来做环保吧';
+  navigate('post-create', { lockedTopic: topic });
+}
+
+// ===== 项目捐赠弹窗 =====
+function showProjectModal(projectName) {
+  document.getElementById('modal-project-name').textContent = projectName;
+  document.getElementById('project-modal').classList.add('show');
+}
+function closeProjectModal() {
+  document.getElementById('project-modal').classList.remove('show');
+}
+
+// ===== 达人心愿列表 =====
+function populateWishList() {
+  var list = document.getElementById('wish-list-container');
+  if (!list) return;
+  var html = '';
+  for (var i = 0; i < wishData.length; i++) {
+    var w = wishData[i];
+    var pct = Math.min(99, Math.round(w.raised / w.target * 100));
+    html += '<div class="wish-row" onclick=\'navigate("daren-wish-detail",{wishIdx:' + i + '})\'>' +
+      '<div class="wish-row-photo" style="background:' + w.bg + '">' + w.avatar + '</div>' +
+      '<div class="wish-row-body">' +
+        '<div class="wish-row-tag">心愿来自「' + w.project + '」</div>' +
+        '<div class="wish-row-title">' + w.star + '·' + w.title + '</div>' +
+        '<div class="wish-row-meta">已筹集 ' + w.raised + '/' + w.target + ' ' + w.unit + ' · ' + pct + '%</div>' +
+        '<div class="wish-row-bar"><div class="wish-row-bar-fill" style="width:' + pct + '%"></div></div>' +
+      '</div></div>';
+  }
+  list.innerHTML = html;
+}
+
+// ===== 达人心愿详情 =====
+function populateWishDetail(info) {
+  var w = wishData[info.wishIdx];
+  if (!w) return;
+  state.currentWish = w;
+
+  // 更新标题
+  document.querySelector('#page-daren-wish-detail .header-title').textContent = w.star + '的心愿';
+
+  // hero区
+  var hero = document.getElementById('wish-hero');
+  hero.innerHTML =
+    '<div class="wish-hero-bg" style="background:' + w.bg + '">' +
+      // 散落花瓣装饰
+      '<svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 360 240" preserveAspectRatio="xMidYMid slice">' +
+        '<g opacity="0.7"><circle cx="40" cy="40" r="6" fill="#fff" opacity="0.6"/><circle cx="320" cy="60" r="8" fill="#fff" opacity="0.5"/><circle cx="290" cy="180" r="5" fill="#fff" opacity="0.6"/><circle cx="60" cy="200" r="7" fill="#fff" opacity="0.5"/></g>' +
+      '</svg>' +
+    '</div>' +
+    '<div class="wish-hero-content">' +
+      '<div class="wish-hero-pretitle">心愿来自「' + w.project + '」</div>' +
+      '<div class="wish-hero-title">' + w.title + '</div>' +
+      '<div class="wish-hero-avatar">' + w.avatar + '</div>' +
+    '</div>' +
+    '<div class="wish-hero-name">心愿发起人：' + w.star + '</div>';
+
+  // 进度
+  var pct = Math.min(100, Math.round(w.raised / w.target * 100));
+  document.getElementById('wish-raised').textContent = w.raised;
+  document.getElementById('wish-target').textContent = w.target;
+  document.getElementById('wish-unit').textContent = w.unit;
+  document.getElementById('wish-progress-fill').style.width = pct + '%';
+  var flowerEl = document.querySelector('.wish-progress-flower');
+  if (flowerEl) flowerEl.style.left = 'calc(' + pct + '% - 9px)';
+  // 复位按钮
+  var btn = document.getElementById('wish-help-btn');
+  if (btn) { btn.disabled = false; btn.textContent = '一键助力'; }
+
+  // 留言板
+  var msgs = [
+    { name: '爱冒险的朵拉', avatar: '朵', color: 'linear-gradient(135deg,#c40d23,#e6303a)', text: '一直很关心这些孩子，希望他们能获得更好的关心和帮助。', time: '2小时前 · 重庆', likes: 6745 },
+    { name: '公益小宇',     avatar: '宇', color: 'linear-gradient(135deg,#ff7675,#fab1a0)', text: '看哭了，这才是一位真正有担当的明星！用行动说话 ❤️', time: '昨天 · 北京', likes: 3298 },
+    { name: '乡村教师张老师', avatar: '张', color: 'linear-gradient(135deg,#4a7fd4,#1976d2)', text: '我带的孩子们太需要这些了，谢谢 ' + w.star + ' 的善举！', time: '3天前 · 云南', likes: 1820 },
+    { name: '暖暖的夕阳',   avatar: '暖', color: 'linear-gradient(135deg,#ffa502,#e68a2e)', text: '爱心的力量汇成河，小小的心愿大大的感动 🌸', time: '5天前 · 上海', likes:  942 }
+  ];
+  var cs = document.getElementById('wish-comments');
+  var ch = '';
+  for (var i = 0; i < msgs.length; i++) {
+    var m = msgs[i];
+    ch += '<div class="comment-row">' +
+      '<div class="comment-avt" style="background:' + m.color + '">' + m.avatar + '</div>' +
+      '<div class="comment-body">' +
+        '<div class="comment-user">' + m.name + '</div>' +
+        '<div class="comment-text">' + m.text + '</div>' +
+        '<div class="comment-meta">' + m.time + ' · ❤ ' + m.likes + '</div>' +
+      '</div></div>';
+  }
+  cs.innerHTML = ch;
+}
+
+// ===== 一键助力 =====
+function onClickWishBtn() {
+  var w = state.currentWish;
+  if (!w) return;
+  w.raised += 1;
+  var pct = Math.min(100, Math.round(w.raised / w.target * 100));
+  document.getElementById('wish-raised').textContent = w.raised;
+  document.getElementById('wish-progress-fill').style.width = pct + '%';
+  var flowerEl = document.querySelector('.wish-progress-flower');
+  if (flowerEl) flowerEl.style.left = 'calc(' + pct + '% - 9px)';
+  // 弹窗
+  document.getElementById('modal-wish-title').textContent = w.title;
+  document.getElementById('wish-modal').classList.add('show');
+}
+function closeWishModal() {
+  document.getElementById('wish-modal').classList.remove('show');
+}
+
+// 注：populateWishList 在 navigate() 中的 daren-wish-list 分支调用
+
+// ===== 视频跳转弹窗 =====
+function showVideoModal(videoTitle) {
+  document.getElementById('modal-video-title').textContent = videoTitle;
+  document.getElementById('video-modal').classList.add('show');
+}
+function closeVideoModal() {
+  document.getElementById('video-modal').classList.remove('show');
+}
+
+// ===== 主页数据看板 Tab 切换 =====
+function switchMainTab(type, el) {
+  var tabs = document.querySelectorAll('#page-main .data-tabs .tab');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('main-rank-region').style.display = type === 'region' ? '' : 'none';
+  document.getElementById('main-rank-topic').style.display = type === 'topic' ? '' : 'none';
+}
+
+// ===== 完整数据看板 Tab 切换 =====
+function switchDataTab(type, el) {
+  var tabs = document.querySelectorAll('#page-data .rank-tabs .rank-tab');
+  tabs.forEach(function(t) { t.classList.remove('active'); });
+  el.classList.add('active');
+  document.getElementById('data-rank-region').style.display = type === 'region' ? '' : 'none';
+  document.getElementById('data-rank-topic').style.display = type === 'topic' ? '' : 'none';
+}
+
+function updateCharCount() {
+  var len = document.getElementById('createContent').value.length;
+  document.getElementById('charCount').textContent = len;
+}
+function toggleTag(el) {
+  el.classList.toggle('selected');
+}
+function escapeHTML(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+var uploadedImages = [];
+function handleImageUpload(e) {
+  var files = e.target.files;
+  if (!files || files.length === 0) return;
+  var container = document.getElementById('imagePreview');
+  for (var i = 0; i < files.length && uploadedImages.length < 9; i++) {
+    var file = files[i];
+    uploadedImages.push(file);
+    var reader = new FileReader();
+    (function(idx) {
+      reader.onload = function(ev) {
+        var wrapper = document.createElement('div');
+        wrapper.style.cssText = 'position:relative;width:80px;height:80px;flex-shrink:0';
+        var img = document.createElement('img');
+        img.src = ev.target.result;
+        img.style.cssText = 'width:80px;height:80px;border-radius:10px;object-fit:cover;border:1px solid #fde5df';
+        var del = document.createElement('button');
+        del.className = 'del-btn';
+        del.textContent = 'x';
+        del.onclick = function() {
+          wrapper.remove();
+          uploadedImages.splice(idx, 1);
+        };
+        wrapper.appendChild(img);
+        wrapper.appendChild(del);
+        container.appendChild(wrapper);
+      };
+    })(uploadedImages.length - 1);
+    reader.readAsDataURL(file);
+  }
+  e.target.value = '';
+}
+function publishPost() {
+  var content = document.getElementById('createContent').value.trim();
+  if (!content) { alert('请输入内容'); return; }
+  alert('发布成功！即将跳转至好事社区');
+  navigate('community');
+  document.getElementById('createContent').value = '';
+  document.getElementById('imagePreview').innerHTML = '';
+  document.getElementById('charCount').textContent = '0';
+}
+
+// ===== 初始加载：渲染主页数据看板 =====
+populateMainRank();
+</script>
+</html>
